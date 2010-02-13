@@ -1,0 +1,34 @@
+<manifest xmlns="http://schemas.microsoft.com/wlw/manifest/weblog">
+<options>
+<clientType>Metaweblog</clientType>
+<supportsKeywords>No</supportsKeywords>
+<supportsFileUpload>Yes</supportsFileUpload>
+<supportsExtendedEntries>No</supportsExtendedEntries>
+<supportsCustomDate>No</supportsCustomDate>
+<supportsCategories>yes</supportsCategories>
+<supportsCategoriesInline>Yes</supportsCategoriesInline>
+<supportsMultipleCategories>Yes</supportsMultipleCategories>
+<supportsHierarchicalCategories>Yes</supportsHierarchicalCategories>
+<supportsNewCategories>No</supportsNewCategories>
+<supportsNewCategoriesInline>No</supportsNewCategoriesInline>
+<supportsCommentPolicy>No</supportsCommentPolicy>
+<supportsPingPolicy>No</supportsPingPolicy>
+<supportsAuthor>No</supportsAuthor>
+<supportsSlug>No</supportsSlug>
+<supportsPassword>No</supportsPassword>
+<supportsExcerpt>No</supportsExcerpt>
+<supportsTrackbacks>No</supportsTrackbacks>
+<supportsPages>No</supportsPages>
+<supportsPageParent>No</supportsPageParent>
+<supportsPageOrder>No</supportsPageOrder>
+<requiresXHTML>True</requiresXHTML>
+<supportsAutoUpdate>No</supportsAutoUpdate>
+</options>
+<weblog>
+<homepageLinkText>View your blog</homepageLinkText>
+<adminLinkText>Administer your blog</adminLinkText>
+<adminurl><![CDATA[
+{blog-homepage-url}admin.php
+]]></adminurl>
+</weblog></manifest>
+
