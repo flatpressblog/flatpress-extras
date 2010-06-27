@@ -12,6 +12,8 @@
 		'check_freq'	=> 'Updating',
 		'check_freq_1'	=> 'Check every',
 		'check_freq_2'	=> 'minutes',
+		'replies'	=> '@Replies',
+		'replies_descr'	=> 'Include my @Replies to other tweets',
 		'check_now'	=> 'Check now',
 		'submit'	=> 'Save Settings'
 	);

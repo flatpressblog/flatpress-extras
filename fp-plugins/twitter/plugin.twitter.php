@@ -27,8 +27,8 @@ function plugin_twitter_get($count=1) {
 	$username=$tconf['userid']; // set user name
 	$format='json'; // set format
 	$url = "http://api.twitter.com/1/statuses/user_timeline/{$username}.{$format}?count={$count}";
-
 	$tweet_category=$tconf['category'];
+	$replies = $tconf['replies'];
 
 	$data = @file_get_contents($url);
 
@@ -36,6 +36,8 @@ function plugin_twitter_get($count=1) {
 	$tweet=json_decode($data); // get tweets and decode them into a variable
 
 	if ($tweet[0]->id == @file_get_contents(PLUGIN_TWITTER_LAST)) return null;
+
+	if (!$replies && $tweet[0]->text[0]=='@') return null; // it is a reply
 
 	$date = strtotime($tweet[0]->created_at);
 
@@ -107,6 +109,8 @@ if (class_exists('AdminPanelAction')){
 			plugin_addoption('twitter', 'userid', @$_POST['userid']);
 			plugin_addoption('twitter', 'check_freq', (int)$_POST['check_freq']);
 			plugin_addoption('twitter', 'category', (int)$_POST['category']);
+			plugin_addoption('twitter', 'replies', (bool)$_POST['replies']);
+
 			plugin_saveoptions('twitter');
 
 			$this->smarty->assign('success', 1);

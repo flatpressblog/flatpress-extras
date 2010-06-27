@@ -29,7 +29,14 @@
 		{html_options options=$categories_all selected=$twitterconf.category}
 	</select>
 	</dd>	
-	
+	<dt>
+		{$plang.replies}
+	</dt>
+	<dd><label for="replies">
+		<input type="checkbox" name="replies" id="replies" {if $twitterconf.replies}checked="checked"{/if} /> 
+		{$plang.replies_descr}
+	</label>
+	</dd>	
 </dl>
 
 <div class="buttonbar">
