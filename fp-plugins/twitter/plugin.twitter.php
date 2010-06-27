@@ -56,6 +56,8 @@ function plugin_twitter_get($count=1) {
 
 	if (!$data) return null;
 	$tweet=json_decode($data); // get tweets and decode them into a variable
+	
+	if (!$tweet) return null;
 
 	if ($tweet[0]->id == @file_get_contents(PLUGIN_TWITTER_LAST)) return null;
 
