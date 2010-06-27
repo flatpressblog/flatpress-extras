@@ -156,8 +156,10 @@ if (class_exists('AdminPanelAction')){
 
 }
 
-//plugin_twitter_shutdown();
 
+// (probably it will be removed/moved from here)
+// credits for this function (which I assume to be public domain)
+// http://www.php.net/manual/en/function.time.php#85481
  function distanceOfTimeInWords($fromTime, $toTime = -1, $showLessThanAMinute = false) {
  	$toTime = $toTime<0? time() : $toTime;
     $distanceInSeconds = round(abs($toTime - $fromTime));
