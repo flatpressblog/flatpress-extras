@@ -23,16 +23,19 @@ function plugin_twitter_setup() {
 }
 
 function plugin_twitter_txttransforms($content, $tconf) {
-	if ($tconf['include-imgs'])
-		$content = preg_replace('{https?://\S*\.(jpg|gif|png)\b}', "\n\n[img=\$0]\n\n", $content);
-	
-	if ($tconf['linkify-urls'])
-		$content = preg_replace('{https?://\S+}', '[url]$0[/url]', $content);
 		
-	if ($tconf['linkify-replies'])
+	
+	if ($tconf['include_imgs'])
+		$content = preg_replace('{\bhttps?://\S*\.(jpg|gif|png)\b}', "\n\n[img=\$0]\n\n", $content);
+	
+	if ($tconf['linkify_urls'])
+		$content = preg_replace('{[^=]\bhttps?://\S+\b}', '[url]$0[/url]', $content);
+	
+	
+	if ($tconf['linkify_replies'])
 		$content = preg_replace('{@(\S+)}', '[url=http://twitter.com/$1]$0[/url]', $content);
 	
-	if ($tconf['linkify-tags'])
+	if ($tconf['linkify_tags'])
 		$content = preg_replace('{#(\S+)}', '[url=http://twitter.com/search?q=%23$1]$0[/url]', $content);
 			
 	//if ($tconf['oembed'])	
@@ -125,18 +128,20 @@ if (class_exists('AdminPanelAction')){
 			$u = trim(@$_POST['userid']);
 			if (!$u) { $this->smarty->assign('success', -2); return 2; }
 
-			if ($_POST['check_now']) { $this->smarty->assign('success', plugin_twitter_updatenow()? 2:3); return 2; }
+			if (@$_POST['check_now']) { $this->smarty->assign('success', plugin_twitter_updatenow()? 2:3); return 2; }
 			
+			echo plugin_twitter_txttransforms("provo a fare #cose con @gente http://asdads/sadsd.jpg sdsds http://sdads.com ",
+			plugin_getoptions('twitter'));
 			
 			plugin_addoption('twitter', 'userid', @$_POST['userid']);
 			plugin_addoption('twitter', 'check_freq', (int)$_POST['check_freq']);
 			plugin_addoption('twitter', 'category', (int)$_POST['category']);
-			plugin_addoption('twitter', 'replies', (bool)$_POST['replies']);
+			plugin_addoption('twitter', 'replies', (bool)@$_POST['replies']);
 			
-			plugin_addoption('twitter','linkify_replies', (bool) $_POST['linkify_replies']);
-			plugin_addoption('twitter','linkify_tags', (bool) $_POST['linkify_tags']);
-			plugin_addoption('twitter','linkify_urls', (bool) $_POST['linkify_urls']);
-			plugin_addoption('twitter','include_imgs', (bool) $_POST['include_imgs']);
+			plugin_addoption('twitter','linkify_replies', (bool)@ $_POST['linkify_replies']);
+			plugin_addoption('twitter','linkify_tags', (bool) @$_POST['linkify_tags']);
+			plugin_addoption('twitter','linkify_urls', (bool) @$_POST['linkify_urls']);
+			plugin_addoption('twitter','include_imgs', (bool) @$_POST['include_imgs']);
 
 			plugin_saveoptions('twitter');
 
