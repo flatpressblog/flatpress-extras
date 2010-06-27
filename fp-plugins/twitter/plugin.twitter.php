@@ -130,7 +130,6 @@ if (class_exists('AdminPanelAction')){
 
 			if (@$_POST['check_now']) { $this->smarty->assign('success', plugin_twitter_updatenow()? 2:3); return 2; }
 			
-			plugin_getoptions('twitter'));
 			
 			plugin_addoption('twitter', 'userid', @$_POST['userid']);
 			plugin_addoption('twitter', 'check_freq', (int)$_POST['check_freq']);
