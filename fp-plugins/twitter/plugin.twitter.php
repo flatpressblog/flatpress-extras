@@ -22,6 +22,25 @@ function plugin_twitter_setup() {
 	return 1;		
 }
 
+function plugin_twitter_txttransforms($content, $tconf) {
+	if ($tconf['include-imgs'])
+		$content = preg_replace('{https?://\S*\.(jpg|gif|png)\b}', "\n\n[img=\$0]\n\n", $content);
+	
+	if ($tconf['linkify-urls'])
+		$content = preg_replace('{https?://\S+}', '[url]$0[/url]', $content);
+		
+	if ($tconf['linkify-replies'])
+		$content = preg_replace('{@(\S+)}', '[url=http://twitter.com/$1]$0[/url]', $content);
+	
+	if ($tconf['linkify-tags'])
+		$content = preg_replace('{#(\S+)}', '[url=http://twitter.com/search?q=%23$1]$0[/url]', $content);
+			
+	//if ($tconf['oembed'])	
+	
+	return $content;
+
+}
+
 function plugin_twitter_get($count=1) {
 	$tconf = plugin_getoptions('twitter');
 	$username=$tconf['userid']; // set user name
@@ -38,6 +57,8 @@ function plugin_twitter_get($count=1) {
 	if ($tweet[0]->id == @file_get_contents(PLUGIN_TWITTER_LAST)) return null;
 
 	if ($replies && $tweet[0]->text[0]=='@') return null; // it is a reply
+	
+	
 
 	$date = strtotime($tweet[0]->created_at);
 
@@ -46,7 +67,8 @@ function plugin_twitter_get($count=1) {
 	file_put_contents(PLUGIN_TWITTER_LOCK .'.tmp', time());
 	rename(PLUGIN_TWITTER_LOCK .'.tmp', PLUGIN_TWITTER_LOCK);
 
-	$content = preg_replace('{https?://\S*}', '[url]$0[/url]', $tweet[0]->text);
+	$content = plugin_twitter_txttransforms($tweet[0]->text, $tconf);
+	
 
 	return $entry = array(
 		'subject' => $tweet[0]->id,
@@ -110,6 +132,11 @@ if (class_exists('AdminPanelAction')){
 			plugin_addoption('twitter', 'check_freq', (int)$_POST['check_freq']);
 			plugin_addoption('twitter', 'category', (int)$_POST['category']);
 			plugin_addoption('twitter', 'replies', (bool)$_POST['replies']);
+			
+			plugin_addoption('twitter','linkify_replies', (bool) $_POST['linkify_replies']);
+			plugin_addoption('twitter','linkify_tags', (bool) $_POST['linkify_tags']);
+			plugin_addoption('twitter','linkify_urls', (bool) $_POST['linkify_urls']);
+			plugin_addoption('twitter','include_imgs', (bool) $_POST['include_imgs']);
 
 			plugin_saveoptions('twitter');
 

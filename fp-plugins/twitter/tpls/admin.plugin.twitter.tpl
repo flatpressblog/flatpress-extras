@@ -29,14 +29,37 @@
 		{html_options options=$categories_all selected=$twitterconf.category}
 	</select>
 	</dd>	
-	<dt>
-		{$plang.replies}
-	</dt>
-	<dd><label for="replies">
+<dl>
+
+<h2>{$plang.otheropts}</h2>
+<dl>
+	<dt>{$plang.replies}</dt>
+	<dd>
+	<label for="replies">
 		<input type="checkbox" name="replies" id="replies" {if $twitterconf.replies}checked="checked"{/if} /> 
 		{$plang.replies_descr}
+	</label></dd>
+	<dt>{$plang.linkify}</dt>
+	<dd>
+	<label for="linkify_replies">
+		<input type="checkbox" name="linkify_replies" id="linkify_replies" {if $twitterconf.linkify_replies}checked="checked"{/if} /> 
+		{$plang.linkify_replies}
 	</label>
-	</dd>	
+	<label for="linkify_tags">
+		<input type="checkbox" name="linkify_tags" id="linkify_tags" {if $twitterconf.linkify_tags}checked="checked"{/if} /> 
+		{$plang.linkify_tags}
+	</label>
+	<label for="linkify_urls">
+		<input type="checkbox" name="linkify_urls" id="linkify_urls" {if $twitterconf.linkify_urls}checked="checked"{/if} /> 
+		{$plang.linkify_urls}
+	</label>
+	</dd>
+	<dt>{$plang.imgs}</dt>
+	<dd>
+	<label for="include_imgs">
+		<input type="checkbox" name="include_imgs" id="include_imgs" {if $twitterconf.include_imgs}checked="checked"{/if} /> 
+		{$plang.include_imgs}
+	</label></dd>
 </dl>
 
 <div class="buttonbar">
