@@ -37,7 +37,7 @@ function plugin_twitter_get($count=1) {
 
 	if ($tweet[0]->id == @file_get_contents(PLUGIN_TWITTER_LAST)) return null;
 
-	if (!$replies && $tweet[0]->text[0]=='@') return null; // it is a reply
+	if ($replies && $tweet[0]->text[0]=='@') return null; // it is a reply
 
 	$date = strtotime($tweet[0]->created_at);
 
