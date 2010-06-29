@@ -13,18 +13,20 @@ define('PLUGIN_TWITTER_LAST', CACHE_DIR.'twitter.last');
 //define('PLUGIN_TWITTER_AUTHOR', true);
 //define('PLUGIN_TWITTER_LOCK', CACHE_DIR.'twitter.lock');
 
-function setup() {
+function plugin_twitter_setup() {
 	if (!plugin_getoptions('twitter')) {
 		return -1;
 	}
 
-
 	return 1;		
-}
-	$o=plugin_twitter_object::get_instance();
-	add_action('init', array(&$o, 'shutdown'));
 
-error_reporting(E_ALL);
+}
+
+function plugin_twitter_registerhooks() {
+	$_o=plugin_twitter_object::get_instance();
+	add_action('shutdown', array(&$_o, 'shutdown'));
+}
+plugin_twitter_registerhooks();
 
 class plugin_twitter_object {
 
@@ -151,7 +153,6 @@ function updatenow() {
 
 function shutdown() {
 	$e = $this->getdelayed(1);
-	print_r($e);
 	if (!$e) return;
 	
 	entry_save($e);
