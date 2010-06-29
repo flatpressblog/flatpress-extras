@@ -13,24 +13,70 @@ define('PLUGIN_TWITTER_LAST', CACHE_DIR.'twitter.last');
 //define('PLUGIN_TWITTER_AUTHOR', true);
 //define('PLUGIN_TWITTER_LOCK', CACHE_DIR.'twitter.lock');
 
-function plugin_twitter_setup() {
+function setup() {
 	if (!plugin_getoptions('twitter')) {
 		return -1;
 	}
 
-	add_action('shutdown', 'plugin_twitter_shutdown');
+
 	return 1;		
 }
+	$o=plugin_twitter_object::get_instance();
+	add_action('init', array(&$o, 'shutdown'));
 
-function plugin_twitter_txttransforms($content, $tconf) {
-		
+error_reporting(E_ALL);
+
+class plugin_twitter_object {
+
+var $tconf;
+
+function plugin_twitter_object() {
+	__construct();
+}
+
+function __construct() {
+	$this->tconf = plugin_getoptions('twitter');
+}
+
+function get_instance() {
+	static $o;
+	if ($o==null) $o=new plugin_twitter_object;
+	return $o;
+}
+
+function urlcallback($matches) {
 	
-	if ($tconf['include_imgs'])
-		$content = preg_replace('{\bhttps?://\S*\.(jpg|gif|png)\b}', "\n\n[img=\$0]\n\n", $content);
+	$u = $matches[0];
+	$replace="";
 	
-	if ($tconf['linkify_urls'])
-		$content = preg_replace('{[^=]\bhttps?://\S+\b}', '[url]$0[/url]', $content);
+	// it is an image
+	if (preg_match('/\.(jpg|png|gif)$/',$u)) {
+		$replace = "\n\n[img=$u]\n\n";
+	} else {
+		$replace = "[url]{$u}[/url]";
+	}
 	
+	return $replace;
+}
+
+function txttransforms($content) {
+
+	$tconf = $this->tconf;
+
+	$urlmatch = '{\bhttps?://\S+\b}';
+	$imgmatch = '{\bhttps?://\S+\.(jpg|gif|png)\b}';
+
+
+	// avoid double matching imgs/urls
+	if ($tconf['include_imgs'] && $tconf['linkify_urls']) {
+		$content = preg_replace_callback($urlmatch, array(&$this, 'urlcallback'), $content);
+	} else {
+		if ($tconf['include_imgs']) {
+			$content = preg_replace($imgmatch, "\n\n[img=\$0]\n\n", $content);
+		} else {
+			$content = preg_replace($urlmatch, "[url]\$0[/url]", $content);
+		}
+	}
 	
 	if ($tconf['linkify_replies'])
 		$content = preg_replace('{@(\S+)}', '[url=http://twitter.com/$1]$0[/url]', $content);
@@ -44,8 +90,8 @@ function plugin_twitter_txttransforms($content, $tconf) {
 
 }
 
-function plugin_twitter_get($count=1) {
-	$tconf = plugin_getoptions('twitter');
+function get($count=1) {
+	$tconf=$this->tconf;
 	$username=$tconf['userid']; // set user name
 	$format='json'; // set format
 	$url = "http://api.twitter.com/1/statuses/user_timeline/{$username}.{$format}?count={$count}";
@@ -68,11 +114,8 @@ function plugin_twitter_get($count=1) {
 	$date = strtotime($tweet[0]->created_at);
 
 	file_put_contents(PLUGIN_TWITTER_LAST, $tweet[0]->id);
-	@unlink(PLUGIN_TWITTER_LOCK);
-	file_put_contents(PLUGIN_TWITTER_LOCK .'.tmp', time());
-	rename(PLUGIN_TWITTER_LOCK .'.tmp', PLUGIN_TWITTER_LOCK);
 
-	$content = plugin_twitter_txttransforms($tweet[0]->text, $tconf);
+	$content = $this->txttransforms($tweet[0]->text);
 	
 
 	return $entry = array(
@@ -84,27 +127,36 @@ function plugin_twitter_get($count=1) {
 	);
 }
 
-function plugin_twitter_getdelayed($count=1) {
+function getdelayed($count=1) {
+	$tconf = $this->tconf;
 	$last_access = @file_get_contents(PLUGIN_TWITTER_LOCK);
-	$tconf = plugin_getoptions('twitter');
-	if (time() - $last_access < $tconf['check_freq']) return;
+	echo $last_access;
+	if (time() - $last_access < 60*$tconf['check_freq']) return;
+	
+	@unlink(PLUGIN_TWITTER_LOCK);
+	file_put_contents(PLUGIN_TWITTER_LOCK .'.tmp', time());
+	rename(PLUGIN_TWITTER_LOCK .'.tmp', PLUGIN_TWITTER_LOCK);
+
 	//echo time() - $last_access;
-	return plugin_twitter_get($count);
+	return $this->get($count);
 }
 
-function plugin_twitter_updatenow() {
-	$e = plugin_twitter_get(1);
+function updatenow() {
+	$e = $this->get(1);
 	if (!$e) return false;
 	entry_save($e);
 	return true;
 
 }
 
-function plugin_twitter_shutdown() {
-	$e = plugin_twitter_getdelayed(1);
+function shutdown() {
+	$e = $this->getdelayed(1);
+	print_r($e);
 	if (!$e) return;
 	
 	entry_save($e);
+
+}
 
 }
 
@@ -155,6 +207,7 @@ if (class_exists('AdminPanelAction')){
 	admin_addpanelaction('plugin', 'twitter', true);
 
 }
+
 
 
 // (probably it will be removed/moved from here)
