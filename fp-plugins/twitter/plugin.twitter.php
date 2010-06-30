@@ -23,14 +23,24 @@ function plugin_twitter_setup() {
 }
 
 function plugin_twitter_registerhooks() {
+	global $smarty;
 	$_o=plugin_twitter_object::get_instance();
 	add_action('shutdown', array(&$_o, 'shutdown'));
+	$smarty->register_modifier('istweet', array(&$_o, 'istweet'));
 }
 plugin_twitter_registerhooks();
+
+
 
 class plugin_twitter_object {
 
 var $tconf;
+
+function get_instance() {
+	static $o;
+	if ($o==null) $o=new plugin_twitter_object;
+	return $o;
+}
 
 function plugin_twitter_object() {
 	__construct();
@@ -40,11 +50,11 @@ function __construct() {
 	$this->tconf = plugin_getoptions('twitter');
 }
 
-function get_instance() {
-	static $o;
-	if ($o==null) $o=new plugin_twitter_object;
-	return $o;
+function istweet($category_array) {
+	return in_array($this->tconf['category'], $category_array);
 }
+
+
 
 function urlcallback($matches) {
 	
@@ -132,7 +142,6 @@ function get($count=1) {
 function getdelayed($count=1) {
 	$tconf = $this->tconf;
 	$last_access = @file_get_contents(PLUGIN_TWITTER_LOCK);
-	echo $last_access;
 	if (time() - $last_access < 60*$tconf['check_freq']) return;
 	
 	@unlink(PLUGIN_TWITTER_LOCK);
