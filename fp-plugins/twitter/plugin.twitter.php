@@ -27,6 +27,7 @@ function plugin_twitter_registerhooks() {
 	$_o=plugin_twitter_object::get_instance();
 	add_action('shutdown', array(&$_o, 'shutdown'));
 	$smarty->register_modifier('istweet', array(&$_o, 'istweet'));
+	$smarty->assign('plugin_twitter_userid', $_o->tconf['userid']);
 }
 plugin_twitter_registerhooks();
 
@@ -194,7 +195,7 @@ if (class_exists('AdminPanelAction')){
 
 			if (@$_POST['check_now']) {
 				$_o = plugin_twitter_object::get_instance();
-				$this->smarty->assign('success', updatenow()? 2:3); 
+				$this->smarty->assign('success', $_o->updatenow()? 2:3); 
 				return 2; 
 			}
 			
