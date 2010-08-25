@@ -13,21 +13,31 @@ jQuery.fn.getFormValues = function(){
 
 
 
-		$(document).ready(function() {
+$(document).ready(function() {
 
-		$('#preview').click(function() {
+	var preview = function(adminEvent) {
 
-		  var formData = $("form").getFormValues();
-		  formData.preview = 'Preview';
-		  console.log(formData);
-		  $.post($('form').attr('action'), formData, 
+		var formData = $("form").getFormValues();
+		formData [ adminEvent ] = 1;
+
+		$.post($('form').attr('action'), formData, 
 			function(data){
-				$('#post-preview').replaceWith($(data).find('#post-preview'));
-		     	$('html,body').animate({scrollTop: $("#post-preview").offset().top},'slow');		
-		  	});
-		  return false;
+				
+				$('#errorlist').replaceWith($(data).find('#errorlist'));
+				$('#admin-post-preview').replaceWith($(data).find('#admin-post-preview'));
+				$('input[type=hidden]').replaceWith($(data).find('input[type=hidden]'));
+				if ([]!==$('#errorlist .errors')) $('.field-error').removeClass('field-error');
 
+
+				setTimeout(function(){$('ul.msgs').fadeOut();},5000);
+		     	$('html,body').animate({scrollTop: $("#errorlist").offset().top},'slow');		
 		});
-		});
-		
-		
+		return false;
+
+	};
+
+	$('#savecontinue').click(function() { return preview('savecontinue'); });
+	$('#preview').click(function() { return preview('preview'); });
+
+});
+
