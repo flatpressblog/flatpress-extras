@@ -29,9 +29,8 @@ $(document).ready(function() {
 				$('input[type=hidden]').replaceWith($(data).find('input[type=hidden]'));
 				if ([]!==$('#errorlist .errors')) $('.field-error').removeClass('field-error');
 
-
-				setTimeout(function(){$('ul.msgs').fadeOut();},5000);
 		     	$('html,body').animate({scrollTop: $("#errorlist").offset().top},'slow');		
+				setTimeout(function(){$('ul.msgs').fadeOut();},5000);
 		});
 		return false;
 
