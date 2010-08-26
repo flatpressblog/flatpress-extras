@@ -15,6 +15,7 @@ jQuery.fn.getFormValues = function(){
 
 $(document).ready(function() {
 
+	var changed = false;
 	var preview = function(adminEvent) {
 
 		var formData = $("form").getFormValues();
@@ -36,8 +37,18 @@ $(document).ready(function() {
 
 	};
 
-	$('#savecontinue').click(function() { return preview('savecontinue'); });
+	$('#savecontinue').click(function() { changed = false; return preview('savecontinue'); });
 	$('#preview').click(function() { return preview('preview'); });
+	$('#save').click(function() { changed = false; return true; });
+
+	$('#subject,#content').change(function() { changed = true; })
+
+	$(window).bind('beforeunload', function() {
+		if (changed)
+            return 'There are unsaved changes.';
+	});
+	
+
 
 });
 
