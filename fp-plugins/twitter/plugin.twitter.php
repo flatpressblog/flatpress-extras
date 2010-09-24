@@ -158,13 +158,11 @@ $count=2;
 
 	if ($tweet[0]->id == @file_get_contents(PLUGIN_TWITTER_LAST)) return null;
 
-	if ($replies && $tweet[0]->text[0]=='@') return null; // it is a reply
-	
-	
-
 	$date = strtotime($tweet[0]->created_at);
 
 	file_put_contents(PLUGIN_TWITTER_LAST, $tweet[0]->id);
+
+	if (!$replies && $tweet[0]->text[0]=='@') return null; // it is a reply
 
 	$content = $this->txttransforms($tweet[0]->text);
 	
