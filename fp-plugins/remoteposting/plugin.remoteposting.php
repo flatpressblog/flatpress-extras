@@ -90,7 +90,8 @@ function plugin_remoteposting_handle() {
 
 	if ( isset($_GET['xmlrpc']) ) {
 	
-		if (SYSTEM_VER <= '0.813')
+		list($maj_ver, $min_ver) = explode('.', SYSTEM_VER);
+		if ($maj_ver==0 && $min_ver <= '813')
 			plugin_remoteposting_backport();
 		
 		include $url.'inc/class-IXR.php';
