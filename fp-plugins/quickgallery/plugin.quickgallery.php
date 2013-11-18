@@ -54,7 +54,7 @@ function plugin_quickgallery_gallery($action, $attr, $content, $params, $node_ob
 
     $l = $fs->getlist();
     
-    sort($l);
+    natsort($l);
 
     $imgattr = $attr;
 
