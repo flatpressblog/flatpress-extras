@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="fp-plugins/ajaxadmin"/>
+	<buildpathentry kind="src" path="fp-plugins/frontpage"/>
+	<buildpathentry kind="src" path="fp-plugins/macros"/>
+	<buildpathentry kind="src" path="fp-plugins/ping"/>
+	<buildpathentry kind="src" path="fp-plugins/quickgallery"/>
+	<buildpathentry kind="src" path="fp-plugins/remoteposting"/>
+	<buildpathentry kind="src" path="fp-plugins/twitter"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+</buildpath>
