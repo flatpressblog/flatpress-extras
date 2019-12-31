@@ -11,6 +11,7 @@ Extras for FlatPress: For now, just a few plugins. A few of them are known to be
 | [ajaxadmin](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ajaxadmin) |  | ❔ *unknown* |
 | [frontpage](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/frontpage) | Sets a default category to display on the front page. | ✔️ Works fine! :) |
 | [macros](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/macros) |  | ❔ *unknown* |
+| [markdown](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/markdown) | Provides [Markdown](http://daringfireball.net/projects/markdown/) markup in posts. | ✔️ Works fine! :) |
 | [ping](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ping) |  | ❔ *unknown* |
 | [quickgallery](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/quickgallery) |  | ❔ *unknown* |
 | [remoteposting](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/remoteposting) |  | ❔ *unknown* |
