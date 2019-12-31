@@ -4,14 +4,14 @@
 FlatPress Extras
 ================
 
-Extras for FlatPress: For now, just a few plugins. A few of them are known to be not functional correctly; we're working on it.
+Extras for FlatPress: For now, just a few plugins. A few of them are known to be not functional correctly, some others have still to be tested. We're working on it!
 
 | Plugin | Description | Status |
 |---|---|---|
-| ajaxadmin |  |  |
-| frontpage | Sets a default category to display on the front page. | Works fine! :) |
-| macros |  |  |
-| ping |  |  |
-| quickgallery |  |  |
-| remoteposting |  |  |
-| twitter |  | Not working since API change :(<br>See [this forum topic](https://forum.flatpress.org/archive/discussion/2381/error-with-twitter-plugin/) |
+| [ajaxadmin](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ajaxadmin) |  | ❔ *unknown* |
+| [frontpage](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/frontpage) | Sets a default category to display on the front page. | ✔️ Works fine! :) |
+| [macros](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/macros) |  | ❔ *unknown* |
+| [ping](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ping) |  | ❔ *unknown* |
+| [quickgallery](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/quickgallery) |  | ❔ *unknown* |
+| [remoteposting](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/remoteposting) |  | ❔ *unknown* |
+| [twitter](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/twitter) |  | ❌ Not working since API change :(<br>See [this forum topic](https://forum.flatpress.org/archive/discussion/2381/error-with-twitter-plugin/) |
