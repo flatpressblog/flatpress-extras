@@ -16,12 +16,10 @@ The process is broadly this:
 - copy this to your flatpress site and rebuild the index
 
 The script does the following
-- rename s the file to entry<date>-<time>.txt based upon the date modified date
+- rename s the file to entry\<date\>-\<time\>.txt based upon the date modified date
 - copies the file to a new subfolder in FlatPress /content folder based upon year and month
 - cuts the first line from the file (and deletes the first line break)
-- prefixes the file with:
-<code>VERSION|fp-1.1|SUBJECT|<first line from file>|CONTENT|</code>
-- suffixes with:
-<code>|AUTHOR|miksmith|DATE|<1566926569>|CATEGORIES|<orig_dir_name>|</code>
+- prefixes the file with: <code>VERSION|fp-1.1|SUBJECT|<first line from file>|CONTENT|</code>
+- suffixes with: <code>|AUTHOR|miksmith|DATE|<1566926569>|CATEGORIES|<orig_dir_name>|</code>
 
 BIG shout out to James O'Connor for putting the script together after we'd worked out what to do!
