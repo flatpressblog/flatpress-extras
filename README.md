@@ -22,7 +22,7 @@ A few of them are known to be not functional correctly, some others have still t
 ## Tools
 | Tool | Description |
 |---|---|
-| [blosxomimport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/blosxomimport) | Importes entries from the legacy blog system Blosxom to FlatPress. |
+| [blosxomimport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/blosxomimport) | Imports entries from the legacy blog system Blosxom to FlatPress. |
 | [cuteimport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/cuteimport) | Imports data from CuteNews to FlatPress. |
 | [dump](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/dump) | Dumps useful informations about your FlatPress data. |
 | [wpexport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/wpexport) | Creates a SQL file to export FP data to wordpress. |
