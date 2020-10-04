@@ -17,7 +17,6 @@ A few of them are known to be not functional correctly, some others have still t
 | [ping](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ping) |  | ❔ *unknown* |
 | [quickgallery](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/quickgallery) |  | ❔ *unknown* |
 | [remoteposting](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/remoteposting) |  | ❔ *unknown* |
-| [twitter](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/twitter) |  | ❌ Not working since API change :(<br>See [this forum topic](https://forum.flatpress.org/archive/discussion/2381/error-with-twitter-plugin/) |
 
 ## Tools
 | Tool | Description |
