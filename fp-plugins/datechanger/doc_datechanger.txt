@@ -1,0 +1,20 @@
+DateChanger-Plugin
+==================
+
+Author: NoWhereMan, revised by Fraenkiman
+
+Description
+-----------
+Lets you change the publish date for (new) entries. Therefore, it adds the edit interface with a date drop down menu.
+
+This plugin only works for new entries. Once published, the date cannot be changed again!
+
+
+Changelog:
+----------
+2022-12-03 (V1.0.1)
+ * Add multilangual support
+ * added german and english translation
+ * Revised style
+ * the position of the plugin is now above the BBCode elements
+ * added Instructions
