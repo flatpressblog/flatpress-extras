@@ -7,19 +7,18 @@
  * Author: NoWhereMan
  * Version: 1.0.1
  * Author URI: https://www.flatpress.org
- * Changelog: 	Add multilangual support
- * 				added german and english translation
- * 				Revised style
- *				added Smarty-Plugin
- * 				added Instructions
+ * Changelog:		Add multilangual support
+ *					added german and english translation
+ *					Revised style
+ *					added Instructions
  * Change-Date:	03.12.2022, by Fraenkiman
  */ 
  
 if (! (
-	basename($_SERVER ['PHP_SELF']) == 'admin.php'	&&	// must be admin area
-	@$_GET ['p'] == 'entry' 				&&	// must be right panel
-	@$_GET ['action'] == 'write'			&&	// must be right action
-	!(@$_POST ['timestamp'] || @$_REQUEST ['entry'])	// must be a new entry
+	basename($_SERVER ['PHP_SELF']) == 'admin.php' && // must be admin area
+	@$_GET ['p'] == 'entry' &&	// must be right panel
+	@$_GET ['action'] == 'write' &&	// must be right action
+	!(@$_POST ['timestamp'] || @$_REQUEST ['entry']) // must be a new entry
 	) ) 
 		return;
  
@@ -38,7 +37,7 @@ function plugin_datechanger_toolbar() {
 	$lang = lang_load('plugin:datechanger'); // Multilingual support by Plugin
 	global $lang; // Multilingual support by FlatPress 
  
-	echo '<div id="admin-date"><fieldset id="plugin_datechanger"><legend>' . $lang ['admin'] ['plugin'] ['datechanger'] ['title'] . '</legend><p>' . $lang ['admin'] ['plugin'] ['datechanger'] ['time'] . ':&nbsp';
+	echo '<div id="admin-date"><fieldset id="plugin_datechanger"><legend>' . $lang ['admin'] ['plugin'] ['datechanger'] ['title'] . '</legend><p>' . $lang ['admin'] ['plugin'] ['datechanger'] ['time'] . ':&nbsp;';
 
 // set time 
 	echo '<label><select name="date[]">';
@@ -74,14 +73,14 @@ function plugin_datechanger_toolbar() {
  
  
 // set date 
-	echo '' . $lang ['admin'] ['plugin'] ['datechanger'] ['date'] . ':&nbsp<select name="date[]">';
+	echo '' . $lang ['admin'] ['plugin'] ['datechanger'] ['date'] . ':&nbsp;<select name="date[]">';
 	for ($i = 1; $i <= 31; $i++) {
 		$v = sprintf('%02d', $i);
 		echo '<option value="' . $v . '"'.
 			(($v == $D)? ' selected="selected"' : '').
 			'>' . $v . '</option>';
 	}
-	echo '</select>&nbsp';
+	echo '</select>&nbsp;';
     
 	$mths = $lang ['date'] ['month'];
 
@@ -93,7 +92,7 @@ function plugin_datechanger_toolbar() {
 			(($v == $M)? ' selected="selected"' : '').
 			'>' . $mths [$i] . '</option>';
 	}
-	echo '</select>&nbsp';
+	echo '</select>&nbsp;';
  
    	echo '<select name="date[]">';
 	foreach (range(2000, intval($Y)+10) as $v) {
@@ -104,7 +103,7 @@ function plugin_datechanger_toolbar() {
 	echo '</select>';
  
 
-    echo '</p></div><!-- end of #admin-date -->';
+    echo '</p></fieldset></div><!-- end of #admin-date -->';
  
 }
  
