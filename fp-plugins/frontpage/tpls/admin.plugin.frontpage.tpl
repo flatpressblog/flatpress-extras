@@ -1,5 +1,5 @@
 
-{include file=shared:errorlist.tpl}
+{include file="shared:errorlist.tpl"}
 
 	
 
@@ -12,7 +12,7 @@
 
 	<div id="fp-def-cats" class="option-list">
 	<p><label><input name="def-cats" type="radio" value="0" {if $categories == 0}checked="checked"{/if} />{$plang.defcat}</label></p>
-	{list_categories type="radio" selected=$categories name=def-}
+	{list_categories type="radio" selected="$categories name=def-"}
 	</div>
 
 </div>
@@ -25,7 +25,7 @@
 	
 	<div id="fp-ex-cats" class="option-list">
 	<p><label><input name="ex-cats" type="radio" value="0" {if $exclude_categories == 0}checked="checked"{/if} />{$plang.defexcat}</label></p>
-	{list_categories type="radio" selected=$exclude_categories name=ex-}
+	{list_categories type="radio" selected="$exclude_categories" name="ex-"}
 	</div>
 	
 	<div class="buttonbar">
