@@ -12,6 +12,7 @@ A few of them are known to be not functional correctly, some others have still t
 | Plugin | Description | Status |
 |---|---|---|
 | [ajaxadmin](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ajaxadmin) |  | ❔ *unknown* |
+| [datechanger](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/datechanger) | Lets you change the publish date for (new) entries. | ✔️ Works fine! :) |
 | [frontpage](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/frontpage) | Sets a default category to display on the front page. | ✔️ Works fine! :) |
 | [macros](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/macros) |  | ❔ *unknown* |
 | [markdown](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/markdown) | Provides [Markdown](http://daringfireball.net/projects/markdown/) markup in posts. | ✔️ Works fine! :) |
