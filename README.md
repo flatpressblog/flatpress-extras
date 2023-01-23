@@ -17,6 +17,7 @@ A few of them are known to be not functional correctly, some others have still t
 | [macros](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/macros) |  | ❔ *unknown* |
 | [markdown](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/markdown) | Provides [Markdown](http://daringfireball.net/projects/markdown/) markup in posts. | ✔️ Works fine! :) |
 | [ping](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ping) |  | ❔ *unknown* |
+| [rssfeed](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/rssfeed) | Enables a widget with a subscribe button. | ✔️ Works fine! :) |
 | [quickgallery](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/quickgallery) |  | ❔ *unknown* |
 | [remoteposting](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/remoteposting) |  | ❔ *unknown* |
 
