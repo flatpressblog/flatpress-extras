@@ -12,7 +12,7 @@
 
 	<div id="fp-def-cats" class="option-list">
 	<p><label><input name="def-cats" type="radio" value="0" {if $categories == 0}checked="checked"{/if} />{$plang.defcat}</label></p>
-	{list_categories type="radio" selected="$categories name=def-"}
+	{list_categories type="radio" selected="$categories" name="def-"}
 	</div>
 
 </div>
