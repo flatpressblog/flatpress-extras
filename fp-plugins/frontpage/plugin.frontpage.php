@@ -2,8 +2,8 @@
 
 /*
  * Plugin Name: Front Page
- * Version: 1.0
- * Plugin URI: http://flatpress.org
+ * Version: 1.0.1
+ * Plugin URI: https://wiki.flatpress.org/res:plugins:frontpage
  * Description: Set a default category to display on the front page
  * Author: NoWhereMan
  * Author URI: http://www.flatpress.org
