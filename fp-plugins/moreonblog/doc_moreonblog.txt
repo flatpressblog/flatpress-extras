@@ -1,0 +1,23 @@
+MoreOnBlog Widget
+=================
+
+Created from a template by Igor Kromin, stylesheet and multilanguage support by Fraenkiman
+
+Description
+-----------
+This plugin creates a box with a series of links to other posts on the same blog.
+The look and feel is configurable via CSS. By default 4 random posts are displayed.
+The plugin is written to only show up on individual posts, which means it won't show anything if you look at the main blog page, which shows a list of blog posts.
+
+Note
+----
+There is a known issue with this plugin that the plugin does not work if there are less than 4 posts in a blog. There may be a simple solution.
+
+Changelog
+---------
+v1.0.1			Added stylesheet and multilanguage support, by Fraenkiman
+Change-Date:	20.02.2023
+
+v1.0.0			Thanks for the template to Igor Kromin (https://www.igorkromin.net)
+Change-Date:	07.10.2014
+
