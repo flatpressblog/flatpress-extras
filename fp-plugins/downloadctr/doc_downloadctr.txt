@@ -1,0 +1,34 @@
+Download Counter
+================
+
+This is a plugin for FlatPress that adds a BBCode tag "Download" with a link to the file to download and a counter for how many times the file has been downloaded.
+
+To use the plug-in, extract it to the fp-plugins directory, activate the plug-in, and make sure that the fp-content/attachs directory is created and writable by the web server user.
+
+The BBCode for this plugin looks like this:
+[download=datei.ext]
+
+It is also possible to specify a name for the link instead of the file name:
+[download=file.ext name="my&nbsp;file"]
+
+It is also possible to display the file size by providing a "size" attribute in the BBcode. The following are valid values for the size attribute (lowercase letters work too):
+Bytes: [download=file.ext size=B]
+Kilobyte: [download=file.ext size=K]
+Megabyte: [download=file.ext size=M]
+Gigabyte: [download=file.ext size=G]
+Terabyte: [download=file.ext size=T]
+
+
+The plugin assumes that the file to be downloaded is located in the fp-content/attachs directory. The link is generated using the blog base URL.
+
+Note: The directory where the file is stored MUST be writable by the web server user (eg www-data), otherwise the download counter will not be updated.
+
+
+Changelog:
+==========
+2022-12-14 (V1.3.2)
+Fixed: The plugin crashes when the BBCode plugin is not enabled. Thanks to Arvid for the hint
+
+2022-11-28 (V1.3.1)
+Error-Pages in HTML5
+Added Instructions
