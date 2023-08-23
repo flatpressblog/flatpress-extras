@@ -1,4 +1,4 @@
-<a href="https://github.com/flatpressblog/flatpress/releases" title="See releases"><img alt="See releases" src="https://img.shields.io/github/release/flatpressblog/flatpress.svg?label=Latest%20release&style=plastic"></a> <a href="./LICENSE.md" title="License"><img alt="License" src="https://img.shields.io/github/license/flatpressblog/flatpress.svg?style=plastic"></a><br>
+<a href="https://github.com/flatpressblog/flatpress/releases" title="See releases"><img alt="See releases" src="https://img.shields.io/github/release/flatpressblog/flatpress.svg?label=Latest%20release&style=plastic"></a> <a href="./LICENSE" title="License"><img alt="License" src="https://img.shields.io/github/license/flatpressblog/flatpress.svg?style=plastic"></a><br>
 [[FlatPress repo](https://github.com/flatpressblog/flatpress)] [[flatpress.org](https://www.flatpress.org/)] [[Support forum](https://forum.flatpress.org/)] [[Wiki](https://wiki.flatpress.org/)] [<a rel="me" href="https://fosstodon.org/@flatpress">Mastodon</a>] [[Twitter](https://www.twitter.com/FlatPress)]
 
 
