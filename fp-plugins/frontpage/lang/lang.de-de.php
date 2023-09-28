@@ -7,7 +7,7 @@
 		'hide'		=> 'Versteckt',
 		'hidedescription'=> 'Wähle eine Kategorie aus, die du im Hauptbeitragsfluss <strong>nicht</strong> anzeigen möchtest.',
 		'defcat'=>	'<strong>Zeige alle</strong> (Standard)',
-		'defexcat'=>	'<strong>keine verstekcen</strong> (Standard)',
+		'defexcat'=>	'<strong>keine verstecken</strong> (Standard)',
 		
 		'submit'	=> 'Kategorie speichern'
 	);
