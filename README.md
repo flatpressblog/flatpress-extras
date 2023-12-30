@@ -20,6 +20,7 @@ A few of them are known to be not functional correctly, some others have still t
 | [moreonblog](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/moreonblog) | The widget displays links to the other random posts on the blog. | ✔️ Works from 4 entries! |
 | [ping](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ping) |  | ❔ *unknown* |
 | [rssfeed](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/rssfeed) | Enables a widget with a subscribe button. | ✔️ Works fine! :) |
+| [Tag](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/tag) | This plugin lets you add tags to your blog entries. | ✔️ Works fine! :) |
 | [quickgallery](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/quickgallery) |  | ❔ *unknown* |
 | [remoteposting](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/remoteposting) |  | ❔ *unknown* |
 
