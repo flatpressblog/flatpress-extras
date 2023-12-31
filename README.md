@@ -12,7 +12,7 @@ A few of them are known to be not functional correctly, some others have still t
 | Plugin | Description | Status |
 |---|---|---|
 | [ajaxadmin](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ajaxadmin) |  | ❔ *unknown* |
-| [datechanger](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/datechanger) | Lets you change the publish date for (new) entries. | ✔️ Works fine! :) |
+| [datechanger](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/datechanger) | Lets you change the publish date for (new) entries. | ❌ See [issue #17](https://github.com/flatpressblog/flatpress-extras/issues/17) |
 | [downloadctr](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/downloadctr) | Adds a BBCode "download" tag for a download counter | ✔️ Works fine! :) |
 | [frontpage](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/frontpage) | Sets a default category to display on the front page. | ✔️ Works fine! :) |
 | [macros](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/macros) |  | ❔ *unknown* |
