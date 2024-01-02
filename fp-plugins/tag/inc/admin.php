@@ -300,16 +300,12 @@ class plugin_tag_admin {
 		} else {
 			$entry = $smarty->getTemplateVars('post');
 		}
-		
-		// Create array content if not available
 		if (empty($this->simplebody)) {
 				$entry = array(
 				'content' => 'content'
 			);
 			$entry = $entry ['content'];
 			$entry = $this->entry->tag_list($entry);
-		} else {
-			return false;
 		}
 
 		$tags = $this->entry->tags;
