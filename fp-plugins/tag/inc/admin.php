@@ -309,11 +309,9 @@ class plugin_tag_admin {
 			$entry = $entry ['content'];
 			$entry = $this->entry->tag_list($entry);
 		} else {
-			$this->entry->tag_list($entry ['content']); //
+			return false;
 		}
 
-		// PHP8.1 Warniing: trying to access array offset on value of type null
-		//$this->entry->tag_list($entry ['content']); 
 		$tags = $this->entry->tags;
 		if (!empty($_POST ['taginput'])) {
 			$tags = array_merge((array) $tags, explode(',', $_POST ['taginput']));
