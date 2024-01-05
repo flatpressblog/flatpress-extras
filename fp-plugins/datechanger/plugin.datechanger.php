@@ -82,7 +82,9 @@ function plugin_datechanger_toolbar() {
 	echo '</p></fieldset></div><!-- end of #admin-date -->';
 }
 
-add_action('editor_toolbar', 'plugin_datechanger_toolbar', 0);
+// Meh, {toolbar} no longer works with fp-1.3 dev -> #17
+//add_action('editor_toolbar', 'plugin_datechanger_toolbar', 0);
+add_filter('simple_edit_form', 'plugin_datechanger_toolbar', 0);
 
 function plugin_datechanger_check() {
 	if ((isset($_GET ['p']) && $_GET ['p'] != 'entry') || (isset($_GET ['action']) && $_GET ['action'] != 'write'))
