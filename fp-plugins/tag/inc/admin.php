@@ -300,20 +300,14 @@ class plugin_tag_admin {
 		} else {
 			$entry = $smarty->getTemplateVars('post');
 		}
-		
-		// Create array content if not available
 		if (empty($this->simplebody)) {
 				$entry = array(
 				'content' => 'content'
 			);
 			$entry = $entry ['content'];
 			$entry = $this->entry->tag_list($entry);
-		} else {
-			$this->entry->tag_list($entry ['content']); //
 		}
 
-		// PHP8.1 Warniing: trying to access array offset on value of type null
-		//$this->entry->tag_list($entry ['content']); 
 		$tags = $this->entry->tags;
 		if (!empty($_POST ['taginput'])) {
 			$tags = array_merge((array) $tags, explode(',', $_POST ['taginput']));
