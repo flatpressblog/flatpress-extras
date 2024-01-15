@@ -34,6 +34,7 @@ function plugin_moreonblog_widget() {
     }
     $widget = array();
     $widget ['subject'] = $lang ['plugin'] ['moreonblog'] ['other_posts'] . $fp_config ['general'] ['title'];
+    $content = '';
     $widget ['content'] = $content;
     return $widget;
 }
