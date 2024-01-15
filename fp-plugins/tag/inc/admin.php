@@ -85,7 +85,7 @@ class plugin_tag_admin {
 			return;
 		}
 
-		add_filter('simple_edit_form', array(
+		add_filter('simple_tag_form', array(
 			&$this,
 			'simple'
 		));
