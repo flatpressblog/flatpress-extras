@@ -84,7 +84,7 @@ function plugin_datechanger_toolbar() {
 
 // Meh, {toolbar} no longer works with fp-1.3 dev -> #17
 //add_action('editor_toolbar', 'plugin_datechanger_toolbar', 0);
-add_filter('simple_edit_form', 'plugin_datechanger_toolbar', 0);
+add_filter('simple_datechanger_form', 'plugin_datechanger_toolbar', 0);
 
 function plugin_datechanger_check() {
 	if ((isset($_GET ['p']) && $_GET ['p'] != 'entry') || (isset($_GET ['action']) && $_GET ['action'] != 'write'))
