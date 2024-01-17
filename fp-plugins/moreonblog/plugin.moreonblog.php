@@ -9,7 +9,7 @@
  * Author URI: http://www.igorkromin.net/
  * 
  * Changelog:
-  * v1.0.2		Only show the widget when a single post is displayed, by Fraenkiman
+ * v1.0.2		Only show the widget when a single post is displayed, by Fraenkiman
  * Change-Date:	16.01.2024
  * v1.0.1		Added stylesheet and multilanguage support, by Fraenkiman
  * Change-Date:	20.02.2023
