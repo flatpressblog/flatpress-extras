@@ -5,13 +5,14 @@
  * Type: Block
  * Description: The widget displays links to the other random posts on the blog. <a href="./fp-plugins/moreonblog/doc_moreonblog.txt" title="Instructions" target="_blank">[Instructions]</a>
  * Author: Igor Kromin
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author URI: http://www.igorkromin.net/
  * 
  * Changelog:
+  * v1.0.2		Only show the widget when a single post is displayed, by Fraenkiman
+ * Change-Date:	16.01.2024
  * v1.0.1		Added stylesheet and multilanguage support, by Fraenkiman
  * Change-Date:	20.02.2023
- * 
  * v1.0.0		Thanks for the template to Igor Kromin
  * Change-Date:	07.10.2014
  */
@@ -26,17 +27,21 @@ function plugin_moreonblog_head() {
 }
 
 function plugin_moreonblog_widget() {
-    global $fpdb, $fp_config, $lang;
+	global $fpdb, $fp_config, $lang;
 	lang_load('plugin:moreonblog');
-    $q =& $fpdb->getQuery();
-    if (($q && $q->single) || isset($fp_params ['entry'])) {
-        $content = zzzzzx();
-    }
-    $widget = array();
-    $widget ['subject'] = $lang ['plugin'] ['moreonblog'] ['other_posts'] . $fp_config ['general'] ['title'];
-    $content = '';
-    $widget ['content'] = $content;
-    return $widget;
+	$content = '';
+	$q =& $fpdb->getQuery();
+	if (($q && $q->single) || isset($fp_params ['entry'])) {
+		$content = zzzzzx();
+	}
+	$widget = array();
+	if (empty($content)) {
+		return;
+	} else {
+		$widget ['subject'] = $lang ['plugin'] ['moreonblog'] ['other_posts'] . $fp_config ['general'] ['title'];
+	}
+	$widget ['content'] = $content;
+	return $widget;
 }
 
 function zzzzzx() {
