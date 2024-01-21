@@ -1,0 +1,186 @@
+Markdown-Syntax
+===============
+
+#### Kopfzeilen (Setext) ####
+Dies ist ein H1
+===============
+
+Dies ist ein H2
+---------------
+
+
+#### Kopfzeilen (atx) ####
+# Dies ist ein H1
+
+## Dies ist ein H2
+
+###### Dies ist ein H6
+
+# Dies ist ein H1 #
+
+## Dies ist ein H2 ##
+
+### Dies ist ein H3 ######
+
+
+#### Zitate ####
+> Dies ist ein Zitat mit zwei Absätzen. Lorem ipsum dolor sit amet,
+> consectetuer adipiscing elit. Aliquam hendrerit mi posuere
+> lectus. Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+> vitae, risus.
+> 
+> Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+> Suspendisse id sem consectetuer libero luctus adipiscing.
+
+> Dies ist ein Zitat mit zwei Absätzen. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae,
+risus.
+
+> Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.
+
+> Dies ist die erste Zitat-Ebene.
+>
+> > Dies ist ein verschachteltes Zitat.
+>
+> Zurück auf der ersten Ebene.
+
+> ## Dies ist eine Überschrift.
+> 
+> 1.   Dies ist der erste Listenpunkt.
+> 2.   Dies ist der zweite Listenpunkt.
+> 
+> Hier ist ein wenig Beispiel-Code:
+> 
+>     return shell_exec("echo $input | $Markdown_script");
+
+
+#### Listen ####
+* Rot
+* Grün
+* Blau
+
++ Rot
++ Grün
++ Blau
+
+- Rot
+- Grün
+- Blau
+
+1. Hund
+2. Katze
+3. Maus
+
+* Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+  viverra nec, fringilla in, laoreet vitae, risus.
+* Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+  Suspendisse id sem consectetuer libero luctus adipiscing.
+  
+* Warsteiner
+* König
+
+* Warsteiner 2
+
+* König 2
+
+1. Dies ist eine Listenpunkt mit zwei Absätzen. Lorem ipsum dolor
+  sit amet, consectetuer adipiscing elit. Aliquam hendrerit
+  mi posuere lectus.
+
+  Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+  vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
+  sit amet velit.
+
+2. Suspendisse id sem consectetuer libero luctus adipiscing.
+
+
+* Dies ist ein Listenpunkt mit zwei Absätzen
+
+ Dies ist der zweite Absatz in diesem Listenpunkt. Nur die
+erste Zeile muss eingerückt sein. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit.
+
+* Ein weiterer Punkt in der selben Liste.
+
+* Ein Listenpunkt mit einem Zitat:
+    > Dies ist ein Zitat
+    > In einer Liste.
+
+* Ein Listenpunkt mit Codebeispiel:
+    <hier Code einfügen>
+
+
+#### Code-Blöcke ####
+Dies ist ein normaler Absatz.
+    Dies ist ein Code-Block.
+
+Ein Beispiel in AppleScript:
+    tell application "Foo"
+        beep
+    end tell
+
+
+#### Links ####
+Dies ist [ein Beispiel](http://example.com/ "Der Linktitel") für
+einen Inline-Link.
+
+[Dieser Link](http://example.net/) hat kein Titel-Attribut.
+
+Auf der Seite [Über mich](/about/) gibt es weitere Informationen.
+
+Dies ist [ein Beispiel] [id] für einen Referenz-Link.
+[id]: http://example.com/  "Optionalen Titel hier eintragen"
+
+[id]: <http://example.com/>  "Optionaler Titel hier"
+
+
+#### Automatische Links ####
+<http://example.com/> | 
+<address@example.com>
+
+
+#### Betonung ####
+*Einzelne Sternchen*
+
+_Einzelne Unterstriche_
+
+**Doppelte Sternchen**
+
+__Doppelte Unterstriche__
+
+Herr*gott*sakrament
+
+\*Dieser Text ist von Sternchen umschlossen.\*
+
+*Kursiv*, **Fett** und ***Fett kursiv*** bzw.
+_Kursiv_, __Fett__ und ___Fett kursiv___
+
+
+#### Code ####
+Benutze die Funktion `printf()` um Text auszugeben.
+``Irgendwo hier (`) ist ein Backtick versteckt.``
+
+Niemand benutzt `<blink>` Tags.
+
+
+#### Grafiken ####
+[Alternativer Text](./fp-plugins/bbcode/res/toolbaricons/link.png)
+
+[Alternativer Text](./fp-plugins/bbcode/res/toolbaricons/link.png "Optionaler Titel")
+
+
+#### Backslash-Maskierung ####
+\*Von Sternchen umgeben\*
+
+
+#### In einer nummerierten Liste verschachtelte Aufzählungslisten ####
+1. Obst
+    * Apfel
+    * Banane
+2. Gemüse
+    - Karotte
+    - Broccoli
+

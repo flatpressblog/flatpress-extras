@@ -1,9 +1,9 @@
 <?php
 /*
  * Plugin Name: Markdown
- * Version: 1.2.1
+ * Version: 1.2.2
  * Plugin URI: https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/markdown
- * Description: Provides <a href="http://daringfireball.net/projects/markdown/">markdown</a> markup in posts
+ * Description: Provides <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> markup in posts <a href="./fp-plugins/markdown/doc_markdown.txt" title="Instructions" target="_blank">[Instructions]</a>
  * Author: Vasily Polovnyov
  * Author URI: https://github.com/vast
  */
@@ -45,3 +45,4 @@ add_filter('the_content', 'pl_markdown', 1);
 add_filter('the_content_rss', 'pl_markdown', 1);
 
 add_filter('comment_text', 'pl_markdown_comment');
+?>
