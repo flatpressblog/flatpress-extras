@@ -42,8 +42,7 @@ class plugin_tag_entry {
 	 * The constructor.
 	 * It doesn't do so much.
 	 *
-	 * @param object $tagdb:
-	 *        	The tagdb instance
+	 * @param object $tagdb: The tagdb instance
 	 */
 	function __construct(&$tagdb) {
 		global $smarty;
@@ -80,16 +79,11 @@ class plugin_tag_entry {
 	 * This function is used as callback from the BBCode class
 	 * to save tags from an entry.
 	 *
-	 * @param string $action:
-	 *        	the action (see the BBCode class manual)
-	 * @param array $attributes:
-	 *        	??? (see the BBCode class manual)
-	 * @param string $content:
-	 *        	what is content of [tag][/tag]
-	 * @param array $params:
-	 *        	??? (see the BBCode class manual)
-	 * @param ??? $node_obhect:
-	 *        	??? (see the BBCode class manual)
+	 * @param string $action: the action (see the BBCode class manual)
+	 * @param array $attributes: ??? (see the BBCode class manual)
+	 * @param string $content: what is content of [tag][/tag]
+	 * @param array $params: ??? (see the BBCode class manual)
+	 * @param ??? $node_obhect: ??? (see the BBCode class manual)
 	 * @returns void string
 	 */
 	function do_bbcode($action, $attributes, $content, $params, $node_object) {
@@ -145,8 +139,7 @@ class plugin_tag_entry {
 	 *
 	 * It makes the list of tag from an entry.
 	 *
-	 * @param string $content:
-	 *        	the content of the entry
+	 * @param string $content: the content of the entry
 	 * @returns string: $content without tags
 	 */
 	function tag_list($content) {
@@ -171,12 +164,9 @@ class plugin_tag_entry {
 	 * This is the modifier that is used to auto-list tag (with link) in
 	 * the templates.
 	 *
-	 * @param array $array:
-	 *        	the tags of the post ({$tags} in smarty)
-	 * @param string $glue:
-	 *        	how to join tags [default: , ]
-	 * @param string $default:
-	 *        	if there aren't tags...
+	 * @param array $array: the tags of the post ({$tags} in smarty)
+	 * @param string $glue: how to join tags [default: , ]
+	 * @param string $default: if there aren't tags...
 	 * @returns: The tag list or $default
 	 */
 	function smarty_modifier($array, $glue = ', ', $default = 'No Tags') {
@@ -184,6 +174,8 @@ class plugin_tag_entry {
 		if (!is_array($array) || !count($array)) {
 			return $default;
 		}
+
+		$entries = $draft = null;
 
 		// Load lang
 		global $lang;
@@ -193,19 +185,24 @@ class plugin_tag_entry {
 		$plang = $lang ['plugin'] ['tag'];
 
 		$links = array();
+
 		// Ok, foreach already checked
 		foreach ($array as $v) {
-			// To be compatible with Flatpress System, we use the filter
-			$link = apply_filters('tag_link', $v);
-
 			// For LAttilaD: show number of entries
+			//$entries = '';
 			$entries = $this->tagdb->taggedEntries($v);
-			$count = count($entries);
-			$titleadd = $count == 1 ? $plang ['oneentry'] : $count . $plang ['entries'];
-			$titleadd = " ({$titleadd})";
 
-			$v = wp_specialchars($v, true);
-			$links [] = "\n" . '<a href="' . $link . '" title="' . $v . $titleadd . '">' . $v . '</a>';
+			// Check if the entry is a draft
+			if ($draft == 0 && is_array($entries) && count($entries) == 1) {
+				// To be compatible with Flatpress System, we use the filter
+				$link = apply_filters('tag_link', $v);
+				
+				$count = count($entries);
+				$titleadd = $count == 1 ? $plang ['oneentry'] : $count . $plang ['entries'];
+				$titleadd = " ({$titleadd})";
+				$v = wp_specialchars($v, true);
+				$links [] = "\n" . '<a href="' . $link . '" title="' . $v . $titleadd . '">' . $v . '</a>';
+			}
 		}
 		return implode($glue, $links);
 	}
@@ -215,8 +212,7 @@ class plugin_tag_entry {
 	 *
 	 * This function adds the tag list at the entry bottom.
 	 *
-	 * @param $content: The
-	 *        	original content of the entry
+	 * @param $content: The original content of the entry
 	 * @return string: The modified $content
 	 */
 	function tag_bottomlist($content) {
@@ -241,10 +237,8 @@ class plugin_tag_entry {
 	 * This function is similar to tag_list but it loads the entry
 	 * by his ID and then it returns the tags.
 	 *
-	 * @param string $id:
-	 *        	The entry ID
-	 * @param boolean $force:
-	 *        	Must I ignore cache?
+	 * @param string $id: The entry ID
+	 * @param boolean $force: Must I ignore cache?
 	 * @return array: The tags
 	 */
 	function entryTags($id, $force = false) {

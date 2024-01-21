@@ -11,7 +11,7 @@ $lang ['plugin'] ['tag'] = array(
 
 	'related' => 'Related Entries',
 	'norelated' => '<ul><li>We haven\'t found any related entry.</li></ul>',
-	'error' => '<ul><li>Error</li></ul>',
+	'error' => '<ul><li>Error</li></ul>'
 );
 
 $lang ['plugin'] ['tag'] ['errors'] = array(
@@ -20,6 +20,6 @@ $lang ['plugin'] ['tag'] ['errors'] = array(
 
 $lang ['admin'] ['plugin'] ['tag'] = array(
 	'tag_pl' => 'Tag Plugin',
-	'remove' => 'Remove',
+	'remove' => 'Remove'
 );
 ?>
