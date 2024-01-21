@@ -16,10 +16,8 @@ class tag_relted_remover extends fs_filelister {
 	/**
 	 * This function checks the files and deletes them.
 	 *
-	 * @param string $directory:
-	 *        	The directory of the file to check
-	 * @param string $file:
-	 *        	The file name
+	 * @param string $directory: The directory of the file to check
+	 * @param string $file: The file name
 	 * @return integer: See fs_filelister class
 	 */
 	function _checkFile($directory, $file) {
@@ -55,15 +53,17 @@ class plugin_tag_admin {
 	 */
 	var $simplecontent = '';
 
+
+	 	var $draft = false;
 	/**
 	 * plugin_tag_admin
 	 *
 	 * It manages hooks.
 	 *
 	 * @param
-	 *        	object &$tagdb: the tag database object
-	 * @param
-	 *        	object &$entry: the tag entry object
+	 * object &$tagdb: the tag database object
+	 * @param 
+	 * object &$entry: the tag entry object
 	 */
 	function __construct(&$tagdb, &$entry) {
 		$this->tagdb = &$tagdb;
@@ -85,6 +85,7 @@ class plugin_tag_admin {
 			return;
 		}
 
+		//add_filter('simple_edit_form', array(
 		add_filter('simple_tag_form', array(
 			&$this,
 			'simple'
@@ -121,39 +122,37 @@ class plugin_tag_admin {
 	 * Function called on entry_save hook.
 	 * It updates the tags database
 	 *
-	 * @param string $id:
-	 *        	the entry id
-	 * @param array $array:
-	 *        	the entry array
+	 * @param string $id: the entry id
+	 * @param array $array: the entry array
 	 * @returns boolean true (always)
 	 */
 	function entry_save($id, $array) {
 		$toremove = array();
 
-		# Get the tags of the entry
+		// Get the tags of the entry
 		$this->entry->tag_list($array ['content']);
 		$tags = $this->entry->tags;
 
-		# If the entry already exists...
+		// If the entry already exists...
 		if (entry_exists($id)) {
-			# Get old tags
+			// Get old tags
 			$entry = entry_parse($id);
 			$this->entry->tag_list($entry ['content']);
 			$old_tags = $this->entry->tags;
-			# Get tags to remove
+			// Get tags to remove
 			$toremove = array_values(array_diff($old_tags, $tags));
-			# Don't do anything with tags that there were already
+			// Don't do anything with tags that there were already
 			$tags = array_values(array_diff($tags, $old_tags));
 		}
 
-		# Add tags
+		// Add tags
 		for($i = 0; $i < count($tags); $i++) {
 			$file = $this->tagdb->tagfile($tags [$i]);
 			$this->tagdb->open_file($file);
 			$this->tagdb->files [$file] [$tags [$i]] [] = $id;
 		}
 
-		# Remove old tags
+		// Remove old tags
 		for($i = 0; $i < count($toremove); $i++) {
 			$file = $this->tagdb->tagfile($toremove [$i]);
 			$f = $this->tagdb->open_file($file);
@@ -167,7 +166,7 @@ class plugin_tag_admin {
 				unset($f [$toremove [$i]] [$k]);
 			}
 
-			# If tag hasn't entries, remove it
+			// If tag hasn't entries, remove it
 			$f [$toremove [$i]] = array_values($f [$toremove [$i]]);
 			if (!count($f [$toremove [$i]])) {
 				unset($f [$toremove [$i]]);
@@ -176,23 +175,23 @@ class plugin_tag_admin {
 			$this->tagdb->files [$file] = $f;
 		}
 
-		# # CRITICAL!! It saves the work
+		// CRITICAL!! It saves the work
 		$this->tagdb->save_all();
 
-		# If we use rewrite, we have to rebuild cache.
+		// If we use rewrite, we have to rebuild cache.
 		if ($this->use_rewrite) {
 			$this->tagdb->rewriteCache(true);
 		}
 
-		# We don't make immediately the cache of widgets:
-		# maybe the tag widget is not used anymore.
+		// We don't make immediately the cache of widgets:
+		// maybe the tag widget is not used anymore.
 		if (file_exists(CACHE_DIR . 'tag-widget.tmp')) {
 			@unlink(CACHE_DIR . 'tag-widget.tmp');
 		}
 		$remover = new tag_relted_remover();
 		$remover->getList();
 
-		# Clean the cache of ajax
+		// Clean the cache of ajax
 		if (file_exists(CACHE_DIR . 'tag-ajax.tmp')) {
 			@unlink(CACHE_DIR . 'tag-ajax.tmp');
 		}
@@ -206,21 +205,20 @@ class plugin_tag_admin {
 	 * This function is called by hook entry_delete.
 	 * It updates the tag database
 	 *
-	 * @param string $id:
-	 *        	The id of the entry that is being deleted.
+	 * @param string $id: The id of the entry that is being deleted.
 	 * @returns boolean true (always)
 	 */
 	function entry_delete($id) {
-		# D'oh! We need to find in the database because entry doesn't exist anymore!
-		# So ugly function, a linear parse of all tags! Oh my...
+		// D'oh! We need to find in the database because entry doesn't exist anymore!
+		// So ugly function, a linear parse of all tags! Oh my...
 		$lister = new tag_lister();
 		$list = $lister->_list;
 		if (!count($list)) {
-			# There is no tag, let's stop here
+			// There is no tag, let's stop here
 			return true;
 		}
 
-		# Very similar to entry_save
+		// Very similar to entry_save
 		foreach ($list as $file) {
 			$f = $this->tagdb->open_file($file);
 			if (!count($f)) {
@@ -243,7 +241,7 @@ class plugin_tag_admin {
 			$this->tagdb->rewriteCache(true);
 		}
 
-		# See at lines 127-128
+		// See at lines 127-128
 		if (file_exists(CACHE_DIR . 'tag-widget.tmp')) {
 			@unlink(CACHE_DIR . 'tag-widget.tmp');
 		}
@@ -269,13 +267,13 @@ class plugin_tag_admin {
 			return false;
 		}
 
-		# Just if we are in mantain panel
+		// Just if we are in mantain panel
 		if (ADMIN_PANEL == 'maintain' && $_GET ['do'] == 'purgetplcache') {
 			fs_delete_recursive(PLUGIN_TAG_DIR);
 			if (!is_dir(PLUGIN_TAG_DIR)) {
 				@fs_mkdir(PLUGIN_TAG_DIR);
 			}
-			# Rebuild cache
+			// Rebuild cache
 			$this->tagdb->makeCache($this->entry);
 			return true;
 		}
@@ -307,7 +305,6 @@ class plugin_tag_admin {
 			$entry = $entry ['content'];
 			$entry = $this->entry->tag_list($entry);
 		}
-
 		$tags = $this->entry->tags;
 		if (!empty($_POST ['taginput'])) {
 			$tags = array_merge((array) $tags, explode(',', $_POST ['taginput']));
@@ -366,8 +363,7 @@ class plugin_tag_admin {
 	/**
 	 * This function removes [tag] from the content.
 	 *
-	 * @param string $content:
-	 *        	The entry content
+	 * @param string $content: The entry content
 	 * @return string: $content modified
 	 */
 	function simpleremove() {
