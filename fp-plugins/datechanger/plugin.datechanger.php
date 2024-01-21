@@ -5,7 +5,7 @@
  * Type: Block
  * Description: Allows to change the date and time for <a href="./admin.php?p=entry&action=write" title="Write Entry">new entries</a> via a drop-down menu. <a href="./fp-plugins/datechanger/doc_datechanger.txt" title="Instructions" target="_blank">[Instructions]</a>
  * Author: NoWhereMan
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author URI: https://www.flatpress.org
  */
 if (!(basename($_SERVER ['PHP_SELF']) == 'admin.php' && // must be admin area
@@ -84,7 +84,7 @@ function plugin_datechanger_toolbar() {
 
 // Meh, {toolbar} no longer works with fp-1.3 dev -> #17
 //add_action('editor_toolbar', 'plugin_datechanger_toolbar', 0);
-add_filter('simple_edit_form', 'plugin_datechanger_toolbar', 0);
+add_filter('simple_datechanger_form', 'plugin_datechanger_toolbar', 0);
 
 function plugin_datechanger_check() {
 	if ((isset($_GET ['p']) && $_GET ['p'] != 'entry') || (isset($_GET ['action']) && $_GET ['action'] != 'write'))
