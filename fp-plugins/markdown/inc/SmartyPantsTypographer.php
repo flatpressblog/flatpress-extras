@@ -125,17 +125,17 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 		else {
 			$chars = preg_split('//', $attr);
 			foreach ($chars as $c){
-				if      ($c == "c") { $current = &$this->do_comma_quotes; }
-				else if ($c == "g") { $current = &$this->do_guillemets; }
-				else if ($c == "G") { $current = &$this->do_geresh_gershayim; }
-				else if ($c == ":") { $current = &$this->do_space_colon; }
-				else if ($c == ";") { $current = &$this->do_space_semicolon; }
-				else if ($c == "m") { $current = &$this->do_space_marks; }
-				else if ($c == "h") { $current = &$this->do_space_emdash; }
-				else if ($c == "H") { $current = &$this->do_space_endash; }
-				else if ($c == "f") { $current = &$this->do_space_frenchquote; }
-				else if ($c == "t") { $current = &$this->do_space_thousand; }
-				else if ($c == "u") { $current = &$this->do_space_unit; }
+				if ($c == "c") { $current = & $this->do_comma_quotes; }
+				else if ($c == "g") { $current = & $this->do_guillemets; }
+				else if ($c == "G") { $current = & $this->do_geresh_gershayim; }
+				else if ($c == ":") { $current = & $this->do_space_colon; }
+				else if ($c == ";") { $current = & $this->do_space_semicolon; }
+				else if ($c == "m") { $current = & $this->do_space_marks; }
+				else if ($c == "h") { $current = & $this->do_space_emdash; }
+				else if ($c == "H") { $current = & $this->do_space_endash; }
+				else if ($c == "f") { $current = & $this->do_space_frenchquote; }
+				else if ($c == "t") { $current = & $this->do_space_thousand; }
+				else if ($c == "u") { $current = & $this->do_space_unit; }
 				else if ($c == "+") {
 					$current = 2;
 					unset($current);
@@ -176,7 +176,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 
 	function educate($t, $prev_token_last_char) {
 		// must happen before regular smart quotes
-		if ($this->do_geresh_gershayim)  $t = $this->educateGereshGershayim($t);
+		if ($this->do_geresh_gershayim) $t = $this->educateGereshGershayim($t);
 
 		$t = parent::educate($t, $prev_token_last_char);
 
@@ -255,7 +255,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 	 *	Example input:	Quotes in « French », »German« and »Finnish» style.
 	 *	Example output:	Quotes in «_French_», »German« and »Finnish» style.
 	 */
-		$opt = ( $this->do_space_frenchquote ==  2 ? '?' : '' );
+		$opt = ( $this->do_space_frenchquote == 2 ? '?' : '' );
 		$chr = ( $this->do_space_frenchquote != -1 ? $this->space_frenchquote : '' );
 
 		// Characters allowed immediatly outside quotes.
@@ -280,7 +280,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 	 *	Example input:	Ingredients : fun.
 	 *	Example output:	Ingredients_: fun.
 	 */
-		$opt = ( $this->do_space_colon ==  2 ? '?' : '' );
+		$opt = ( $this->do_space_colon == 2 ? '?' : '' );
 		$chr = ( $this->do_space_colon != -1 ? $this->space_colon : '' );
 
 		$_ = preg_replace("/$this->space$opt(:)(\\s|$)/m",
@@ -298,7 +298,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 	 *	Example input:	There he goes ; there she goes.
 	 *	Example output:	There he goes_; there she goes.
 	 */
-		$opt = ( $this->do_space_semicolon ==  2 ? '?' : '' );
+		$opt = ( $this->do_space_semicolon == 2 ? '?' : '' );
 		$chr = ( $this->do_space_semicolon != -1 ? $this->space_semicolon : '' );
 
 		$_ = preg_replace("/$this->space(;)(?=\\s|$)/m", 
@@ -319,7 +319,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 	 *	Example input:	¡ Holà ! What ?
 	 *	Example output:	¡_Holà_! What_?
 	 */
-		$opt = ( $this->do_space_marks ==  2 ? '?' : '' );
+		$opt = ( $this->do_space_marks == 2 ? '?' : '' );
 		$chr = ( $this->do_space_marks != -1 ? $this->space_marks : '' );
 
 		// Regular marks.
@@ -344,7 +344,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 	 *	Example input:	Then — without any plan — the fun happend.
 	 *	Example output:	Then_—_without any plan_—_the fun happend.
 	 */
-		$opt = ( $this->do_space_emdash ==  2 ? '?' : '' );
+		$opt = ( $this->do_space_emdash == 2 ? '?' : '' );
 		$chr = ( $this->do_space_emdash != -1 ? $this->space_emdash : '' );
 		$_ = preg_replace("/$this->space$opt(&#8212;|—)$this->space$opt/", 
 			"$chr\\1$chr", $_);
@@ -363,7 +363,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 	 *	Example input:	Then — without any plan — the fun happend.
 	 *	Example output:	Then_—_without any plan_—_the fun happend.
 	 */
-		$opt = ( $this->do_space_endash ==  2 ? '?' : '' );
+		$opt = ( $this->do_space_endash == 2 ? '?' : '' );
 		$chr = ( $this->do_space_endash != -1 ? $this->space_endash : '' );
 		$_ = preg_replace("/$this->space$opt(&#8211;|–)$this->space$opt/", 
 			"$chr\\1$chr", $_);
@@ -421,7 +421,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 	 *	Example input:	Get 3 mol of fun for 3 $.
 	 *	Example output:	Get 3_mol of fun for 3_$.
 	 */
-		$opt = ( $this->do_space_unit ==  2 ? '?' : '' );
+		$opt = ( $this->do_space_unit == 2 ? '?' : '' );
 		$chr = ( $this->do_space_unit != -1 ? $this->space_unit : '' );
 
 		$_ = preg_replace('/
@@ -444,7 +444,7 @@ class SmartyPantsTypographer extends \Michelf\SmartyPants {
 	 *	Example input:	Fun i.e. something pleasant.
 	 *	Example output:	Fun i.e._something pleasant.
 	 */
-		$opt = ( $this->do_space_abbr ==  2 ? '?' : '' );
+		$opt = ( $this->do_space_abbr == 2 ? '?' : '' );
 
 		$_ = preg_replace("/(^|\s)($this->abbr_after) $opt/m",
 			"\\1\\2$this->space_abbr", $_);
