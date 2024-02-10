@@ -11,8 +11,8 @@ A few of them are known to be not functional correctly, some others have still t
 
 | Plugin | Description | Status |
 |---|---|---|
-| [akismet](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/akismet) | Minimizes spam in comments using the [Akismet service](https://akismet.com/). | ✔️ Works fine! :) |
 | [ajaxadmin](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ajaxadmin) |  | ❔ *unknown* |
+| [akismet](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/akismet) | Minimizes spam in comments using the [Akismet service](https://akismet.com/). | ✔️ Works fine! :) |
 | [datechanger](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/datechanger) | Lets you change the publish date for (new) entries. | ✔️ Works fine! :) |
 | [downloadctr](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/downloadctr) | Adds a BBCode "download" tag for a download counter | ✔️ Works fine! :) |
 | [frontpage](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/frontpage) | Sets a default category to display on the front page. | ✔️ Works fine! :) |
