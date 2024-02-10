@@ -1,12 +1,24 @@
 <?php
 /*
  * Plugin Name: Markdown
- * Version: 1.2.2
+ * Version: 1.2.3
  * Plugin URI: https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/markdown
- * Description: Provides <a href="https://en.wikipedia.org/wiki/Markdown">markdown</a> markup in posts <a href="./fp-plugins/markdown/doc_markdown.txt" title="Instructions" target="_blank">[Instructions]</a>
+ * Description: Provides <a href="https://en.wikipedia.org/wiki/Markdown" target="_blank">markdown</a> markup in your entries. <a href="./fp-plugins/markdown/doc_markdown.txt" title="Instructions" target="_blank">[Instructions]</a>
  * Author: Vasily Polovnyov
  * Author URI: https://github.com/vast
  */
+
+function pl_markdown_head() { // stytesheet-file
+	$pdir = plugin_geturl('markdown');
+
+	echo '
+	<!-- BOF Markdown Stylesheet -->
+	<link rel="stylesheet" type="text/css" href="' . $pdir . 'res/markdown.css">
+	<!-- EOF Markdown Stylesheet  -->
+	';
+}
+
+add_action('wp_head', 'pl_markdown_head'); // stytesheet-file
 
 // Openning and closing smart double-quotes.
 // define( 'SMARTYPANTS_SMART_DOUBLEQUOTE_OPEN', "&#171;" );
@@ -16,7 +28,6 @@ define('XML_HTMLSAX3', plugin_getdir('markdown') . '/inc/');
 require_once plugin_getdir('markdown') . '/inc/MarkdownExtra.inc.php';
 require_once plugin_getdir('markdown') . '/inc/SmartyPantsTypographer.inc.php';
 
-// require plugin_getdir('markdown') . '/inc/safehtml.php';
 function pl_markdown($text) {
 	$my_html = \Michelf\MarkdownExtra::defaultTransform($text);
 	$my_html = \Michelf\SmartyPantsTypographer::defaultTransform($my_html);

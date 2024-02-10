@@ -23,7 +23,7 @@ class SmartyPants {
 	 * Version
 	 */
 
-	const  SMARTYPANTSLIB_VERSION = "1.8.1";
+	const SMARTYPANTSLIB_VERSION = "1.8.1";
 
 
 	/**
@@ -59,7 +59,7 @@ class SmartyPants {
 
 		// try to take parser from the static parser list
 		static $parser_list;
-		$parser = &$parser_list[$parser_class][$attr];
+		$parser = & $parser_list [$parser_class] [$attr];
 
 		// create the parser if not already set
 		if (!$parser)
@@ -158,7 +158,7 @@ class SmartyPants {
 		else {
 			$chars = preg_split('//', $attr);
 			foreach ($chars as $c) {
-				if ($c == "q") { $this->do_quotes    = 1; }
+				if ($c == "q") { $this->do_quotes = 1; }
 				else if ($c == "b") { $this->do_backticks = 1; }
 				else if ($c == "B") { $this->do_backticks = 2; }
 				else if ($c == "d") { $this->do_dashes = 1; }
@@ -438,7 +438,7 @@ class SmartyPants {
 	 */
 
 		//						em		en
-		$_ = str_replace(array("---",  "--",),
+		$_ = str_replace(array("---", "--",),
 						 array($this->em_dash, $this->en_dash), $_);
 		return $_;
 	}
