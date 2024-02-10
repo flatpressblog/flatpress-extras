@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Akismet
- * Plugin URI: https://github.com/flatpressblog/flatpress-extras/edit/master/fp-plugins/akismet
+ * Plugin URI: https://github.com/flatpressblog/flatpress-extras/blob/master/fp-plugins/akismet
  * Author: FlatPress
  * Author URI: https://www.flatpress.org
  * Description: Integration with Akismet powerful Antispam system.
