@@ -8,7 +8,7 @@ based on the original FlatPress plugin [syntaxhighlighter from 2005](https://for
 
 ## installation
 
-Download the [latest release](https://github.com/Fraenkiman/fp-plugins/archive/refs/heads/main.zip) and extract `main.zip` to your `fp-plugins/` folder.
+Download the [latest release](https://github.com/flatpressblog/flatpress-extras/archive/refs/heads/master.zip) and extract `master.zip` and copy the syntaxhighlighter plugin to your `fp-plugins/` folder.
 
 If you want to use git, use
 ```shell
