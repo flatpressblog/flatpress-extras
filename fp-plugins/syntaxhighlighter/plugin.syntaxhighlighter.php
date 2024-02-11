@@ -4,7 +4,7 @@
  * Version: 1.0.3-fp
  * Plugin URI: https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins
  * Description: <a href="https://git.la10cy.net/DeltaLima/flatpress-plugin-syntaxhighlighter-ng/">SyntaxHighlighter-NG</a> (a fork from DeltaLima 2023) using now <a href="https://prismjs.com">prism.js</a> <a href="./fp-plugins/syntaxhighlighter/doc_syntaxhighlighter.txt" title="Instructions" target="_blank">[Instructions]</a>
- * Author: 2005 NoWhereMan,<br> 2023 DeltaLima
+ * Author: 2005 NoWhereMan,<br>2023 DeltaLima
  * Author URI: https://flatpress.org
  * License: MIT
  * 
