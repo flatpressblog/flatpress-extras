@@ -12,7 +12,7 @@ Download the [latest release](https://github.com/flatpressblog/flatpress-extras/
 
 If you want to use git, use
 ```shell
-$ git@github.com:Fraenkiman/fp-plugins.git /pathto/flatpress/fp-plugins/
+$ git@github.com:flatpressblog/flatpress-extras.git  /pathto/flatpress/fp-extras/
 ```
 
 ## codeblock with language syntax highlightning
