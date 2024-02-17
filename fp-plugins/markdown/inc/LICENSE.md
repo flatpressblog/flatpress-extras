@@ -3,7 +3,8 @@ Copyright (c) 2004-2019 Michel Fortin
 <https://michelf.ca/>  
 All rights reserved.
 
-Based on Markdown  
+Based on Markdown
+Markdown is free software, available under the terms of a BSD-style open source license.
 Copyright (c) 2003-2006 John Gruber  
 <https://daringfireball.net/>  
 All rights reserved.

@@ -1,0 +1,30 @@
+#main table {
+	width: 100%;
+	margin-bottom: 2em
+}
+
+#main table tr:first-child th:last-child { border-top-right-radius: 5px }
+
+#main table tr:first-child th:first-child { border-top-left-radius: 5px }
+
+#main table tr:last-child td:last-child { border-bottom-right-radius: 5px }
+
+#main table tr:last-child td:first-child { border-bottom-left-radius: 5px }
+
+#main table thead th {
+	font-style: italic;
+	background: #ccc;
+	text-align: center;
+	padding: 5px
+}
+
+#main table tbody td {
+	background: #fafafa;
+	text-align: center
+}
+
+div.footnotes hr {
+	/*display: block;*/
+}
+
+div.footnotes ol li p { display: inline }

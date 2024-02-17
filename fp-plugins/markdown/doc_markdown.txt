@@ -1,186 +1,235 @@
-Markdown-Syntax
-===============
+##### Markdown syntax #####
+#### Headers (Setext) ####
+This is an H1 
+=============
 
-#### Kopfzeilen (Setext) ####
-Dies ist ein H1
-===============
-
-Dies ist ein H2
----------------
+This is an H2 
+-------------
 
 
-#### Kopfzeilen (atx) ####
-# Dies ist ein H1
+#### Headers (atx) ####
+# This is an H1 
 
-## Dies ist ein H2
+## This is a H2 
 
-###### Dies ist ein H6
+###### This is a H6 
 
-# Dies ist ein H1 #
+# This is a H1 # 
 
-## Dies ist ein H2 ##
+## This is a H2 ## 
 
-### Dies ist ein H3 ######
+### This is a H3 ###
 
 
-#### Zitate ####
-> Dies ist ein Zitat mit zwei Absätzen. Lorem ipsum dolor sit amet,
-> consectetuer adipiscing elit. Aliquam hendrerit mi posuere
-> lectus. Vestibulum enim wisi, viverra nec, fringilla in, laoreet
-> vitae, risus.
+#### Quotes ####
+> This is a two paragraph quote. The customer should be very satisfied, 
+> consectetuer adipiscing elit. I have decided to 
+a policeman. Vestibulum enim visi, viverra nec, fringilla in, laoreet 
+> vitae, risus. 
+>> 
+Until then, it will be fun. Some people always want to be very happy. 
+> Suspendisse id sem consectetuer libero luctus adipiscing. 
+
+> This is a two paragraph quote It is important to have good customer service, 
+a customer service provider. I decided to use a policeman. 
+For the vestibule, we saw: Viverra nec, Fringilla in, Laoreet vitae, 
+Risus. 
+
+> Until it's fun to play. Some people always want to be very happy. 
+Suspendisse id sem consectetuer libero luctus adipiscing. 
+
+> Today is the first day Quote level. 
 > 
-> Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-> Suspendisse id sem consectetuer libero luctus adipiscing.
+> > This is a nested quote 
+>> 
+Back to the first level 
 
-> Dies ist ein Zitat mit zwei Absätzen. Lorem ipsum dolor sit amet,
-consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
-Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae,
-risus.
-
-> Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-Suspendisse id sem consectetuer libero luctus adipiscing.
-
-> Dies ist die erste Zitat-Ebene.
->
-> > Dies ist ein verschachteltes Zitat.
->
-> Zurück auf der ersten Ebene.
-
-> ## Dies ist eine Überschrift.
+> ## This is a headline 
 > 
-> 1.   Dies ist der erste Listenpunkt.
-> 2.   Dies ist der zweite Listenpunkt.
+> 1. this is the first list item. 
+> 2. this is the second list item 
 > 
-> Hier ist ein wenig Beispiel-Code:
+> Here is a small example code: 
 > 
->     return shell_exec("echo $input | $Markdown_script");
+> return shell_exec("echo $input | $Markdown_script");
 
 
-#### Listen ####
-* Rot
-* Grün
-* Blau
+#### Lists ####
+* Red 
+* Green 
+* Blue 
 
-+ Rot
-+ Grün
-+ Blau
++ Red 
++ green 
++ Blue 
 
-- Rot
-- Grün
-- Blau
+- red 
+- green 
+- blue 
 
-1. Hund
-2. Katze
-3. Maus
+1. dog 
+2. cat 
+3. mouse 
 
-* Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-  Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
-  viverra nec, fringilla in, laoreet vitae, risus.
-* Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
-  Suspendisse id sem consectetuer libero luctus adipiscing.
+* Lorem ipsum dolor let amet, consectetuer adipiscing elit. 
+  I decided to use a policeman. For the vestibule we have seen: 
+  Viverra nec, Fringilla in, Laoreet vitae, Risus. 
+* Until it's fun to play. Some people always want to be very happy. 
+  Suspendisse id sem consectetuer libero luctus adipiscing. 
   
-* Warsteiner
-* König
+* Warsteiner 
+* King 
 
-* Warsteiner 2
+* Warsteiner 2 
 
-* König 2
+* King 2 
 
-1. Dies ist eine Listenpunkt mit zwei Absätzen. Lorem ipsum dolor
-  sit amet, consectetuer adipiscing elit. Aliquam hendrerit
-  mi posuere lectus.
+1 This is a list item with two paragraphs. It is important to, 
+  to have good customer service, a customer service provider. I decided to, 
+  to use a policeman. 
 
-  Vestibulum enim wisi, viverra nec, fringilla in, laoreet
-  vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
-  sit amet velit.
+  For the vestibule, we saw: Viverra nec, Fringilla in, Laoreet 
+  vitae, Risus. Until then, it will be fun. 
+  Some people always want to be very happy . 
 
-2. Suspendisse id sem consectetuer libero luctus adipiscing.
-
-
-* Dies ist ein Listenpunkt mit zwei Absätzen
-
- Dies ist der zweite Absatz in diesem Listenpunkt. Nur die
-erste Zeile muss eingerückt sein. Lorem ipsum dolor sit amet,
-consectetuer adipiscing elit.
-
-* Ein weiterer Punkt in der selben Liste.
-
-* Ein Listenpunkt mit einem Zitat:
-    > Dies ist ein Zitat
-    > In einer Liste.
-
-* Ein Listenpunkt mit Codebeispiel:
-    <hier Code einfügen>
+2 Suspendisse id sem consectetuer libero luctus adipiscing.
 
 
-#### Code-Blöcke ####
-Dies ist ein normaler Absatz.
-    Dies ist ein Code-Block.
+* This is a two-paragraph list item. 
 
-Ein Beispiel in AppleScript:
-    tell application "Foo"
-        beep
+ This is the second paragraph in this list item. Only the 
+first line must be indented It is important to have good customer service, 
+a customer service provider. 
+
+* Another item in the same list. 
+
+* A list item with a quote: 
+    > This is a quote 
+    > In a list. 
+
+* A list item with a code example: 
+    <insert code here>
+
+
+#### Definition Lists ####
+Apple
+:   Pomaceous fruit of plants of the genus Malus in 
+    the family Rosaceae.
+
+Orange
+:   The fruit of an evergreen tree of the genus Citrus.
+
+
+#### Code blocks ####
+This is a normal paragraph. 
+    The tag is a code block. 
+
+An example in AppleScript: 
+    tell application "Foo" 
+        beep 
     end tell
 
 
+#### Simple tables ####
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
+A colon at the left of the separator line will make the column left-aligned.
+A colon on the right of the line will make the column right-aligned.
+Colons at both side means the column is center-aligned.
+
+| Item      | Value |
+| --------- | -----:|
+| Computer  | $1600 |
+| Phone     |   $12 |
+| Pipe      |    $1 |
+
+
 #### Links ####
-Dies ist [ein Beispiel](http://example.com/ "Der Linktitel") für
-einen Inline-Link.
+This is [an example](http://example.com/ "The link title") for an inline link. 
+an inline link. 
 
-[Dieser Link](http://example.net/) hat kein Titel-Attribut.
+[This link](http://example.net/) has no title attribute 
 
-Auf der Seite [Über mich](/about/) gibt es weitere Informationen.
+There is more information on the [About me](/about/) page. 
 
-Dies ist [ein Beispiel] [id] für einen Referenz-Link.
-[id]: http://example.com/  "Optionalen Titel hier eintragen"
+This is [an example] [id] for a reference link 
+[id]: http://example.com/ "Enter optional title here" 
 
-[id]: <http://example.com/>  "Optionaler Titel hier"
+[id]: <http://example.com/> "Optional title here"
 
 
-#### Automatische Links ####
-<http://example.com/> | 
+#### Footnotes ####
+One text with a footnote[^1].
+Second text with a footnote.[^2]
+[^1]: The footnote text can be placed at the end of the page.
+[^2]: This footnote text can also be placed at the end of the page.
+
+
+#### Automatic links ####
+<http://example.com/>
+
 <address@example.com>
 
 
-#### Betonung ####
-*Einzelne Sternchen*
+#### emphasis ####
+*Single asterisk 
 
-_Einzelne Unterstriche_
+_Single underline_ 
 
-**Doppelte Sternchen**
+**Double asterisks** 
 
-__Doppelte Unterstriche__
+__double underlines__ 
 
-Herr*gott*sakrament
+Lord*God*sacrament 
 
-\*Dieser Text ist von Sternchen umschlossen.\*
+\*This text is enclosed by asterisks.\* 
 
-*Kursiv*, **Fett** und ***Fett kursiv*** bzw.
-_Kursiv_, __Fett__ und ___Fett kursiv___
+*italics*, **bold** and ***bold italics*** or 
+_italic_, __bold__ and ___bold italic___
 
 
 #### Code ####
-Benutze die Funktion `printf()` um Text auszugeben.
-``Irgendwo hier (`) ist ein Backtick versteckt.``
+Use the `printf()` function to output text 
+``Somewhere here (`) a backtick is hidden.`` 
 
-Niemand benutzt `<blink>` Tags.
-
-
-#### Grafiken ####
-[Alternativer Text](./fp-plugins/bbcode/res/toolbaricons/link.png)
-
-[Alternativer Text](./fp-plugins/bbcode/res/toolbaricons/link.png "Optionaler Titel")
+Nobody uses ``<blink>` tags
 
 
-#### Backslash-Maskierung ####
-\*Von Sternchen umgeben\*
+#### Graphics ####
+[Alternative text](./fp-plugins/bbcode/res/toolbaricons/link.png) 
+
+[Alternative text](./fp-plugins/bbcode/res/toolbaricons/link.png "Optional title")
 
 
-#### In einer nummerierten Liste verschachtelte Aufzählungslisten ####
-1. Obst
-    * Apfel
-    * Banane
-2. Gemüse
-    - Karotte
-    - Broccoli
+#### Backslash masking ####
+\*Surrounded by asterisks\*
 
+
+#### Bulleted lists nested in a numbered list ####
+1. fruit 
+    * Apple 
+    * Banana 
+2. vegetable 
+    - carrot 
+    - broccoli
+
+
+##### License #####
+PHP Markdown Lib  
+Copyright (c) 2004-2019 Michel Fortin
+<https://michelf.ca/>  
+All rights reserved.
+
+Based on Markdown
+Markdown is free software, available under the terms of a BSD-style open source license.
+Copyright (c) 2003-2006 John Gruber  
+<https://daringfireball.net/>  
+All rights reserved.

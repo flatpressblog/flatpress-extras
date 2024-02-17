@@ -30,7 +30,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 	/**
 	 * Optional class attribute for footnote links and backlinks.
 	 */
-	public string $fn_link_class     = "footnote-ref";
+	public string $fn_link_class = "footnote-ref";
 	public string $fn_backlink_class = "footnote-backref";
 
 	/**
@@ -121,7 +121,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 		);
 		$this->block_gamut += array(
 			"doFencedCodeBlocks" => 5,
-			"doTables"  => 15,
+			"doTables" => 15,
 			"doDefLists" => 45,
 		);
 		$this->span_gamut += array(
@@ -230,7 +230,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 
 		// Split on components
 		preg_match_all('/[#.a-z][-_:a-zA-Z0-9=]+/', $attr, $matches);
-		$elements = $matches[0];
+		$elements = $matches [0];
 
 		// Handle classes and IDs (only first ID taken into account)
 		$attributes = array();
@@ -259,7 +259,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 			$attr_str .= ' class="' . implode(" ", $classes) . '"';
 		}
 		if (!$this->no_markup && !empty($attributes)) {
-			$attr_str .= ' '.implode(" ", $attributes);
+			$attr_str .= ' ' . implode(" ", $attributes);
 		}
 		return $attr_str;
 	}
@@ -275,7 +275,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 
 		// Link defs are in the form: ^[id]: url "optional title"
 		$text = preg_replace_callback('{
-							^[ ]{0,'.$less_than_tab.'}\[(.+)\][ ]?:	# id = $1
+							^[ ]{0,' . $less_than_tab . '}\[(.+)\][ ]?:	# id = $1
 							  [ ]*
 							  \n?				# maybe *one* newline
 							  [ ]*
@@ -311,8 +311,8 @@ class MarkdownExtra extends \Michelf\Markdown {
 		$link_id = strtolower($matches [1]);
 		$url = $matches [2] == '' ? $matches [3] : $matches [2];
 		$this->urls[$link_id] = $url;
-		$this->titles[$link_id] = &$matches [4];
-		$this->ref_attr[$link_id] = $this->doExtraAttributes("", $dummy = &$matches [5]);
+		$this->titles[$link_id] = & $matches [4];
+		$this->ref_attr[$link_id] = $this->doExtraAttributes("", $dummy = & $matches [5]);
 		return ''; // String that will replace the block
 	}
 
@@ -429,7 +429,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 							' . $this->block_tags_re . '			|
 							' . $this->context_block_tags_re . '	|
 							' . $this->clean_tags_re . '        	|
-							(?!\s)'.$enclosing_tag_re . '
+							(?!\s)' . $enclosing_tag_re . '
 						)
 						(?:
 							(?=[\s"\'/a-zA-Z0-9])	# Allowed characters after tag name.
@@ -541,8 +541,8 @@ class MarkdownExtra extends \Michelf\Markdown {
 					$text, $matches))
 				{
 					// End marker found: pass text unchanged until marker.
-					$parsed .= $tag . $matches[0];
-					$text = substr($text, strlen($matches[0]));
+					$parsed .= $tag . $matches [0];
+					$text = substr($text, strlen($matches [0]));
 				}
 				else {
 					// Unmatched marker: just skip it.
@@ -742,7 +742,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 					// Get enclosing tag name for the ParseMarkdown function.
 					// (This pattern makes $tag_name_re safe without quoting.)
 					preg_match('/^<([\w:$]*)\b/', $tag, $matches);
-					$tag_name_re = $matches[1];
+					$tag_name_re = $matches [1];
 
 					// Parse the content using the HTML-in-Markdown parser.
 					list ($block_text, $text)
@@ -865,7 +865,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 	protected function _doAnchors_reference_callback($matches) {
 		$whole_match = $matches [1];
 		$link_text = $matches [2];
-		$link_id = &$matches [3];
+		$link_id = & $matches [3];
 
 		if ($link_id == "") {
 			// for shortcut links like [this][] or [this].
@@ -907,9 +907,9 @@ class MarkdownExtra extends \Michelf\Markdown {
 	protected function _doAnchors_inline_callback($matches) {
 		$link_text = $this->runSpanGamut($matches [2]);
 		$url = $matches [3] === '' ? $matches [4] : $matches [3];
-		$title_quote = &$matches [6];
-		$title = &$matches [7];
-		$attr = $this->doExtraAttributes("a", $dummy =& $matches [8]);
+		$title_quote = & $matches [6];
+		$title = & $matches [7];
+		$attr = $this->doExtraAttributes("a", $dummy = & $matches [8]);
 
 		// if the URL was of the form <s p a c e s> it got caught by the HTML
 		// tag parser and hashed. Need to reverse the process before using the URL.
@@ -1032,9 +1032,9 @@ class MarkdownExtra extends \Michelf\Markdown {
 	protected function _doImages_inline_callback($matches) {
 		$alt_text = $matches [2];
 		$url = $matches [3] === '' ? $matches [4] : $matches [3];
-		$title_quote = &$matches [6];
-		$title = &$matches [7];
-		$attr = $this->doExtraAttributes("img", $dummy = &$matches [8]);
+		$title_quote = & $matches [6];
+		$title = & $matches [7];
+		$attr = $this->doExtraAttributes("img", $dummy = & $matches [8]);
 
 		$alt_text = $this->encodeAttribute($alt_text);
 		$url = $this->encodeURLAttribute($url);
@@ -1106,7 +1106,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 
 		$defaultId = is_callable($this->header_id_func) ? call_user_func($this->header_id_func, $matches[1]) : null;
 
-		$attr  = $this->doExtraAttributes("h$level", $dummy = &$matches [2], $defaultId);
+		$attr = $this->doExtraAttributes("h$level", $dummy = & $matches [2], $defaultId);
 		$block = "<h$level$attr>" . $this->runSpanGamut($matches [1]) . "</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
 	}
@@ -1120,7 +1120,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 		$level = strlen($matches [1]);
 
 		$defaultId = is_callable($this->header_id_func) ? call_user_func($this->header_id_func, $matches [2]) : null;
-		$attr  = $this->doExtraAttributes("h$level", $dummy = &$matches [3], $defaultId);
+		$attr = $this->doExtraAttributes("h$level", $dummy = & $matches [3], $defaultId);
 		$block = "<h$level$attr>" . $this->runSpanGamut($matches [2]) . "</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
 	}
@@ -1179,7 +1179,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 						.* [|] .* \n		# Row content
 					)*
 				)
-				('.$this->id_class_attr_catch_re.')?	 # $4 = id/class attributes
+				(' . $this->id_class_attr_catch_re . ')?	 # $4 = id/class attributes
 				(?=\n|\Z)					# Stop at final double newline.
 			}xm',
 			array($this, '_DoTable_callback'), $text);
@@ -1487,8 +1487,8 @@ class MarkdownExtra extends \Michelf\Markdown {
 	 * @return string
 	 */
 	protected function _doFencedCodeBlocks_callback($matches) {
-		$classname = &$matches [2];
-		$attrs = &$matches [3];
+		$classname = & $matches [2];
+		$attrs = & $matches [3];
 		$codeblock = $matches [4];
 
 		if ($this->code_block_content_func) {
@@ -1508,9 +1508,9 @@ class MarkdownExtra extends \Michelf\Markdown {
 			$classes[] = $this->code_class_prefix . $classname;
 		}
 		$attr_str = $this->doExtraAttributes($this->code_attr_on_pre ? "pre" : "code", $attrs, null, $classes);
-		$pre_attr_str  = $this->code_attr_on_pre ? $attr_str : '';
+		$pre_attr_str = $this->code_attr_on_pre ? $attr_str : '';
 		$code_attr_str = $this->code_attr_on_pre ? '' : $attr_str;
-		$codeblock  = "<pre$pre_attr_str><code$code_attr_str>$codeblock</code></pre>";
+		$codeblock = "<pre$pre_attr_str><code$code_attr_str>$codeblock</code></pre>";
 
 		return "\n\n".$this->hashBlock($codeblock)."\n\n";
 	}
@@ -1742,12 +1742,12 @@ class MarkdownExtra extends \Michelf\Markdown {
 	 * @return string
 	 */
 	protected function _appendFootnotes_callback($matches) {
-		$node_id = $this->fn_id_prefix . $matches[1];
+		$node_id = $this->fn_id_prefix . $matches [1];
 
 		// Create footnote marker only if it has a corresponding footnote *and*
 		// the footnote hasn't been used by another marker.
 		if (isset($this->footnotes[$node_id])) {
-			$num =& $this->footnotes_numbers[$node_id];
+			$num = & $this->footnotes_numbers[$node_id];
 			if (!isset($num)) {
 				// Transfer footnote content to the ordered list and give it its
 				// number
@@ -1781,7 +1781,7 @@ class MarkdownExtra extends \Michelf\Markdown {
 				"</sup>";
 		}
 
-		return "[^" . $matches[1] . "]";
+		return "[^" . $matches [1] . "]";
 	}
 
 	/**

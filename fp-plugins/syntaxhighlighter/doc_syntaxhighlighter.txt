@@ -1,0 +1,34 @@
+Description
+-----------
+Makes [code] blocks syntax highlighted (when language specified) with prism.js
+
+By default the “small-size” prism.js language support is enabled. This contains following supported language tags by default:
+
+markup, css, clike, javascript, apacheconf, arduino, atom, bash, basic, batch, 
+bbcode, c, cpp, cmake, csv, diff, docker, git, go, html, http, ini, java, json,
+log, makefile, markdown, markup-templating, nginx, pascal, perl, php,
+powershell, python, rss, ruby, shell-session, sql, svg, typescript, vbnet,
+visual-basic, wiki, yaml, xml
+
+See prismjs.com#supported-languages for the corresponding “[code=]”-tags and the full list of languages which are supported in the full package, you can configure as well.
+
+Example
+-------
+no syntax highlightning
+[code]Just plain text e.g.[/code]
+
+PHP code block
+[code=php]<?php echo "This is an php example" ?>[/code]
+
+apache config block
+[code=apacheconf]<Location /example>
+    Order Deny,Allow
+    Deny from all
+    Allow from .foo.com
+</Location>[/code]
+
+Configuration
+-------------
+You can configure the prism.js package size to use (tiny, small, full) and the used theme (coy, dark, default, funky, okaidia, solarizedlight, tomorrow, twilight).
+
+Just edit for that config.php
