@@ -1,0 +1,53 @@
+CKEditor v4.22.1 Features:
+==========================
+Programming language                JavaScript
+Data model                          HTML/DOM
+Architecture                        Plugin-based
+Editor types                        Classic, inline
+UI                                  Toolbar, dialogs, and features manipulated through right-click context menu
+UI customization                    Skins, UI color change
+License                             CKEditor 4 Open-Source edition (4.22.* and below) is licensed under the terms of any of the following licenses at your choice:
+                                    GPLv2 or later, MPLv1.1 or later, LGPLv2.1 or later (LICENSE.md)
+
+FlatPress:
+==========
+However, this plugin only works in entries. If you want to use the editor with static pages, you need to edit this file:
+
+	Admin/panels/static/admin.static.write.tpl
+
+Find the line with: 
+
+	“{*here will go a plugin hook*}”
+
+And then write:
+
+	{action hook=simple_edit_form}
+
+
+FAQ:
+====
+Is CKEditor compatible with bbcode?
+Yes. You can use both at same time. However, I recommend to use only one at the same time. 
+
+Can I change the appearance or the range of functions?
+Yes, to change the skin or the range of functions, open the file /fp-plugins/ckeditor/res/config.js
+
+The editor also contains a markdown plugin. Can I use this for FlatPress?
+Yes, you can. However, the markdown syntax is written in plain text in the FlatPress blog.
+It is therefore recommended that you also activate the Markdown plugin for FlatPress.
+You can download the plugin from the wiki.
+https://wiki.flatpress.org/res:plugins:markdown
+
+
+Proof of Concept:
+=================
+Francisco Arocas @Franah (CDN-version), 20024 Marcus @DeltaLima (locally hosted version)
+
+
+Resources:
+==========
+https://ckeditor.com/cke4/builder
+https://github.com/ckeditor/ckeditor4-releases
+https://github.com/ckeditor/ckeditor4-docs
+https://github.com/flatpressblog/flatpress-extras
+https://ckeditor.com/legal/ckeditor-oss-license/
