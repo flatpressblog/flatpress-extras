@@ -153,19 +153,17 @@ class plugin_tag_widget {
 		# If there aren't tags
 		if (!count($cache)) {
 			$message = $lang ['notags'];
-			$code = <<<CLOUD
-<div class="tagcloud">
-	{$message}
-</div>
-CLOUD;
+			$code = '
+				<div class="tagcloud">' . $message . '</div>
+				';
 		} else {
 			$tags = $this->getRandom($cache, $number);
 			uksort($tags, 'strnatcasecmp');
 			$delta = PLUGIN_TAG_WMAX-PLUGIN_TAG_WMIN;
 			$unit = PLUGIN_TAG_WUN;
-			$format = '<a href="%s" class="tag-%s" title="%s" style="font-size: %u'.
-				$unit . ';">%s</a>' . "\n\t";
-			$code = "<div class=\"tagcloud\">\n\t";
+			$format = '
+				<a href="%s" class="tag-%s" title="%s" style="font-size: %u' . $unit . ';">%s</a>' . ' ';
+			$code = '<div class="tagcloud">';
 			foreach ($tags as $tag => $perc) {
 				$l = apply_filters('tag_link', $tag);
 				$n = $cache [$tag] ['a'];
@@ -177,7 +175,8 @@ CLOUD;
 				$s = PLUGIN_TAG_WMIN + $perc * $delta;
 				$code .= sprintf($format, $l, $d, $t, $s, $c);
 			}
-			$code = substr($code, 0, -1) . '</div>';
+			$code = substr($code, 0, -1) . '
+			</div>';
 		}
 
 		return array(
@@ -189,7 +188,7 @@ CLOUD;
 	## RELATED ENTRIES
 
 	/**
-	 * This function is the callback for Flatpress Widget System.
+	 * This function is the callback for FlatPress Widget System.
 	 * It manages the related tag widget.
 	 *
 	 * @param string $id: The entry id
@@ -223,10 +222,12 @@ CLOUD;
 					$link = get_permalink($id);
 
 					$entry ['subject'] = wp_specialchars($entry ['subject'], 1);
-					$code .= "\n<li><a href=\"{$link}\" title=\"{$entry ['subject']}\">{$entry ['subject']}</a></li>";
+					$code .= '
+						<li>&raquo; <a href="' . $link . '" title="' . $entry ['subject'] . '">' . $entry ['subject'] . '</a></li>';
 				}
 
-				$code .= "\n</ul>";
+				$code .= '
+			</ul>';
 			}
 		}
 
@@ -248,7 +249,7 @@ CLOUD;
 	 */
 	function getRelation($id, $number = PLUGIN_TAG_REL, $force = false) {
 		$ym = substr($id, 5, 4);
-		$cachefile = CACHE_DIR . "tag-related-$ym.tmp";
+		$cachefile = CACHE_DIR . 'tag-related-' . $ym . '.tmp';
 
 		if (file_exists($cachefile) && !$force) {
 			$cache = array();
