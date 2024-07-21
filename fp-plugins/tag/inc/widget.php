@@ -150,7 +150,7 @@ class plugin_tag_widget {
 		$lang = $lang ['plugin'] ['tag'];
 		$cache = $this->makeCache();
 
-		# If there aren't tags
+		// If there aren't tags
 		if (!count($cache)) {
 			$message = $lang ['notags'];
 			$code = '
@@ -233,10 +233,18 @@ class plugin_tag_widget {
 
 		$post = $oldpost;
 
-		return array(
-			'subject' => $lang ['related'],
-			'content' => $code,
-		);
+		// Show only for single entry
+		if (!empty($fp_params ['entry'])) {
+			return array(
+				'subject' => $lang ['related'],
+				'content' => $code,
+			);
+		} else {
+			return array(
+				'subject' => '',
+				'content' => '',
+			);
+		}
 	}
 
 	/**
