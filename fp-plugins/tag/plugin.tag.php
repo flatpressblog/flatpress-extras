@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Tag
  * Version: 2.6.3
- * Plugin URI: https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/tag
+ * Plugin URI: https://github.com/ebal/flatpress_tag_plugin/
  * Description: Allows using tags in flatpress. This plugin requires BBCode
  * Author: Evaggelos Balaskas
  * Author URI: https://github.com/ebal/
@@ -41,6 +41,11 @@ class plugin_tag {
 
 	// Entry_tag, null for now
 	var $entry_class = null;
+
+	// more params is declared here
+	var $admin_class = null;
+	var $widget_class = null;
+	var $init_class = null;
 
 	/**
 	 * plugin_tag
