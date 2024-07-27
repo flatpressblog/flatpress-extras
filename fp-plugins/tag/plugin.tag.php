@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Tag
  * Version: 2.6.3
- * Plugin URI: https://github.com/ebal/flatpress_tag_plugin/
+ * Plugin URI: https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/tag
  * Description: Allows using tags in flatpress. This plugin requires BBCode
  * Author: Evaggelos Balaskas
  * Author URI: https://github.com/ebal/
