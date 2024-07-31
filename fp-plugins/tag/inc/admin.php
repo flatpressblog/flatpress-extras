@@ -53,8 +53,11 @@ class plugin_tag_admin {
 	 */
 	var $simplecontent = '';
 
+	var $draft = false;
 
-	 	var $draft = false;
+	// more params is declared here
+	var $simplebody = null;
+
 	/**
 	 * plugin_tag_admin
 	 *
