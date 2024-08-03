@@ -13,9 +13,6 @@ class plugin_tag_init {
 	// Is the walker still valid?
 	var $valid = false;
 
-	// more params is declared here
-	var $tag_link = null;
-
 	/**
 	 * plugin_tag_init
 	 *
