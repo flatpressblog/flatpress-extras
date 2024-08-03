@@ -14,8 +14,8 @@ class tag_prettyurls {
 	// The baseurl
 	var $baseurl = null;
 
-	// The taglink; set by the init_tag class.
-	var $taglink = '';
+	// The tag_link; set by the init_tag class.
+	var $tag_link = '';
 
 	// more params is declared here
 	var $fp_params = null;
