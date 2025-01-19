@@ -11,6 +11,7 @@ A few of them are known to be not functional correctly, some others have still t
 
 | Plugin | Description | Status |
 |---|---|---|
+| [akismet](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/akismet) | Minimizes spam in comments using the [Akismet service](https://akismet.com/). | ✔️ Works fine! :) |
 | [ajaxadmin](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ajaxadmin) |  | ❔ *unknown* |
 | [akismet](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/akismet) | Minimizes spam in comments using the [Akismet service](https://akismet.com/). | ✔️ Works fine! :) |
 | [ckeditor](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/ckeditor) | CKEditor 4 is a powerful WYSIWYG HTML editor. | ✔️ Works fine! :) |
