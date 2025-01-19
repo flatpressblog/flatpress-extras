@@ -7,12 +7,19 @@
  *
  */
 class tag_prettyurls {
-	# The "original" PrettyURLs
+
+	// The "original" PrettyURLs
 	var $original = null;
-	# The baseurl
+
+	// The baseurl
 	var $baseurl = null;
-	# The taglink; set by the init_tag class.
-	var $taglink = '';
+
+	// The tag_link; set by the init_tag class.
+	var $tag_link = '';
+
+	// more params is declared here
+	var $fp_params = null;
+
 	/**
 	 * tag_prettyurls
 	 *
@@ -25,8 +32,9 @@ class tag_prettyurls {
 		$this->original = &$original;
 		$this->baseurl = &$original->baseurl;
 	}
-	# The functions called by the hooks.
-	# They just call "original" functions
+
+	// The functions called by the hooks.
+	// They just call "original" functions
 	function permalink($str, $id) {
 		return $this->original->permalink($str, $id);
 	}
@@ -82,9 +90,9 @@ class tag_prettyurls {
 				return array();
 			}
 			$l = $this->tag_link;
-			## Code by plugin.prettyurls.php, by NoWhereMan
+			// Code by plugin.prettyurls.php, by NoWhereMan
 				$q = &$fpdb->getQuery();
-				list($caption, $id) = call_user_func(array(&$q, 'get'.$nextprev));
+				list($caption, $id) = call_user_func(array(&$q, 'get'. $nextprev));
 				$page = 1;
 				if (isset($this->fp_params ['paged']) && $this->fp_params ['paged'] > 1)
 					$page = $this->fp_params ['paged'];
@@ -92,9 +100,9 @@ class tag_prettyurls {
 				if ($page > 0)
 					$l .= 'page/' . $page . '/';
 				return array($caption, $l);
-			## End Code by PrettyURLs
+			// End Code by PrettyURLs
 		} else {
-			# If it's not the tag, let's call the "original" function
+			// If it's not the tag, let's call the "original" function
 			return $this->original->nextprevlink($nextprev, $v);
 		}
 	}

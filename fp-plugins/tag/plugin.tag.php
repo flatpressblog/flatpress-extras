@@ -42,6 +42,11 @@ class plugin_tag {
 	// Entry_tag, null for now
 	var $entry_class = null;
 
+	// more params is declared here
+	var $admin_class = null;
+	var $widget_class = null;
+	var $init_class = null;
+
 	/**
 	 * plugin_tag
 	 *

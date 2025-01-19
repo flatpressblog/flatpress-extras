@@ -1,0 +1,15 @@
+/*
+ * Hides BBcode controls, the preview and the preview button
+ * replaced by CKEditor
+ */
+#admin-post-preview,
+#admin-bbcode-toolbar,
+#admin-editor .alignleft,
+#admin-editor .emoticons,
+#admin-editor .hint.externlink,
+#admin-content input#preview { display: none }
+
+/*
+ * Smiley
+ */
+#main div p img { margin: 0; vertical-align: middle }

@@ -1,13 +1,18 @@
 <?php
 class plugin_tag_init {
-	# The tag_db object, null for now
+
+	// The tag_db object, null for now
 	var $tag_db = null;
-	# walker_array: the array used from the fake walker
+
+	// walker_array: the array used from the fake walker
 	var $walker_array = array();
-	# How many entries there are...
+
+	// How many entries there are...
 	var $fpdb_len = 0;
-	# Is the walker still valid?
-	var $valid=false;
+
+	// Is the walker still valid?
+	var $valid = false;
+
 	/**
 	 * plugin_tag_init
 	 *
@@ -33,22 +38,22 @@ class plugin_tag_init {
 	function hook() {
 		global $fpdb, $fp_params;
 		if (empty($fp_params ['tag'])) {
-			# We stop here
+			// We stop here
 			return true;
 		}
 		$tag = $fp_params ['tag'];
 
-		# Load the database
+		// Load the database
 		$file = $this->tag_db->open_file($this->tag_db->tagfile($tag));
 
 		if (!count($file[$tag])) {
-			# No entries or no tag: 404 error
+			// No entries or no tag: 404 error
 			$fp_params ['entry'] = 'entry000000-000000';
 			return false;
 		}
 
-		# Sets the entries to $this->walker_array (with ids shifted
-		# with keys) and sort them
+		// Sets the entries to $this->walker_array (with ids shifted
+		// with keys) and sort them
 		$this->walker_array = array_map('entry_idtokey', $file [$tag]);
 		rsort($this->walker_array);
 
@@ -58,18 +63,18 @@ class plugin_tag_init {
 			$fp_params ['count'] = $fp_params ['count'] > $l ? $l : $fp_params ['count'];
 		}
 
-		# Create the fake walker and the fake cat
+		// Create the fake walker and the fake cat
 		$fp_params ['cat'] =- 0xFF;
 		$fpdb->_indexer [-0xFF] = &$this;
 		$this->fpdb_len = $l;
 		reset($this->walker_array);
 
-		# Solve problems with Frontpage plugin
+		// Solve problems with Frontpage plugin
 		if (isset($fp_params ['not']) && @!constant('PLUGIN_TAG_ALLOW_NOT')) {
 			unset($fp_params ['not']);
 		}
 
-		# We have to do it the dirty PrettyURLs paging
+		// We have to do it the dirty PrettyURLs paging
 		if (class_exists('Plugin_PrettyURLs')) {
 			global $plugin_prettyurls;
 			$puBackup = $plugin_prettyurls;
@@ -144,11 +149,11 @@ class plugin_tag_init {
 	function rewrite($url) {
 		global $fp_params;
 
-		# If it's PrettyURLs...
+		// If it's PrettyURLs...
 		if (class_exists('Plugin_PrettyURLs')) {
-			# PU unset all params
+			// PU unset all params
 			system_init_action_params();
-			# Try to get URL from plugin
+			// Try to get URL from plugin
 			global $plugin_prettyurls;
 			if (is_callable(array($plugin_prettyurls, 'get_url'))) {
 				$url = $plugin_prettyurls->get_url();
@@ -157,7 +162,7 @@ class plugin_tag_init {
 					$url = $_SERVER ['PATH_INFO'];
 				} elseif(!empty($_SERVER ['REQUEST_URI'])) {
 					$url = $_SERVER ['REQUEST_URI'];
-					$url = substr($url, strlen(BLOG_ROOT)-1);
+					$url = substr($url, strlen(BLOG_ROOT) -1);
 					$qs = strpos($url, '?');
 					$url = $qs === false ? $url : substr($url, 0, $qs);
 					$an = strpos($url, '#');
@@ -171,7 +176,7 @@ class plugin_tag_init {
 		$e = explode('/', $url);
 
 		if (count($e) == 0) {
-			# The work is finished here ;)
+			// The work is finished here ;)
 			return $url;
 		}
 
@@ -180,14 +185,14 @@ class plugin_tag_init {
 			$e1 = array_shift($e);
 		}
 
-		# If the first word isn't tag, it isn't a work of us.
+		// If the first word isn't tag, it isn't a work of us.
 		if ($e1 != 'tag') {
 			return $url;
 		}
 
-		# Get the tag
+		// Get the tag
 		$tag = array_shift($e);
-		# Get the sanitized tags (for urls...)
+		// Get the sanitized tags (for urls...)
 		$sanitized = $this->tag_db->rewriteCache();
 		$tag = strtolower(rawurlencode($tag)); // Fix for arabian chars
 		if (!isset($sanitized [$tag])) {
@@ -196,12 +201,12 @@ class plugin_tag_init {
 		$fp_params ['tag'] =  $sanitized [$tag];
 
 		if (isset($fp_params ['entry'])) {
-			# The entry000000-000000
+			// The entry000000-000000
 			unset($fp_params ['entry']);
 		}
 
 		if (count($e) == 0) {
-			# Ok, no feed or page. Let's stop here ;)
+			// Ok, no feed or page. Let's stop here ;)
 			return '';
 		}
 
@@ -215,7 +220,7 @@ class plugin_tag_init {
 			$fp_params ['paged'] = array_shift($e);
 		}
 
-		# What remain of the url
+		// What remain of the url
 		return implode('/', $e);
 	}
 }
