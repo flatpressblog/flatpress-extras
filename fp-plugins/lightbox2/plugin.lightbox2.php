@@ -6,7 +6,7 @@
  * Plugin URI: https://www.flatpress.org
  * Author: FlatPress
  * Author URI: https://www.flatpress.org
- * Description: Lightbox overlays using <a href="http://www.digitalia.be/software/slimbox2">SlimBox 2</a> requires <a href="http://jquery.com" title="jQuery">jQuery</a> (modified jsutils plugin). Part of the standard distribution.
+ * Description: Lightbox overlays using <a href="http://www.digitalia.be/software/slimbox2">SlimBox 2</a> requires <a href="http://jquery.com" title="jQuery">jQuery</a> (modified jsutils plugin).
  */
 
 // # Original author: NoWhereMan (http://www.nowhereland.it)
@@ -26,12 +26,11 @@ function plugin_lightbox2_head() {
 add_action('wp_head', 'plugin_lightbox2_head');
 
 function plugin_lightbox2_footer() {
-	$random_hex = RANDOM_HEX;
 
 	$pdir = plugin_geturl('lightbox2');
 	echo '
 		<!-- start of lightbox -->
-		<script nonce="' . $random_hex . '" src="' . $pdir . 'res/slimbox2.js"></script>
+		<script src="' . $pdir . 'res/slimbox2.js"></script>
 		<!-- end of lightbox -->';
 }
 add_action('wp_footer', 'plugin_lightbox2_footer');
