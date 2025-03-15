@@ -5,7 +5,7 @@
  * Plugin URI: https://www.flatpress.org
  * Author: FlatPress
  * Author URI: https://www.flatpress.org
- * Description: Manage the cache of the LastComments plugin. Requires LastComment plugin enabled. Part of the standard distribution.
+ * Description: Manage the cache of the LastComments plugin. Requires LastComment plugin enabled.
  */
 if (class_exists('AdminPanelAction')) {
 
