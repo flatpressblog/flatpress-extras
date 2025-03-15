@@ -19,6 +19,7 @@ A few of them are known to be not functional correctly, some others have still t
 | [downloadctr](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/downloadctr) | Adds a BBCode "download" tag for a download counter | ✔️ Works fine! :) |
 | [frontpage](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/frontpage) | Sets a default category to display on the front page. | ✔️ Works fine! :) |
 | [lightbox2](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/lightbox2) | Lightbox overlays using SlimBox 2 requires jQuery (modified jsutils plugin) | ✔️ Works fine! :) |
+| [lastcommentsadmin](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/lastcommentsadmin) | Manage the cache of the LastComments plugin. | ✔️ Works fine! :) |
 | [macros](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/macros) |  | ❔ *unknown* |
 | [markdown](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/markdown) | Provides [Markdown](http://daringfireball.net/projects/markdown/) markup in posts. | ✔️ Works fine! :) |
 | [moreonblog](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/moreonblog) | The widget displays links to the other random posts on the blog. | ✔️ Works from 4 entries! |
