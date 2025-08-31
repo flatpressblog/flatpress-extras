@@ -35,6 +35,7 @@ A few of them are known to be not functional correctly, some others have still t
 | [blosxomimport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/blosxomimport) | Imports entries from the legacy blog system Blosxom to FlatPress. |
 | [cuteimport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/cuteimport) | Imports data from CuteNews to FlatPress. |
 | [dump](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/dump) | Dumps useful informations about your FlatPress data. |
+| [Smarty5 smoketest](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/Smarty5-Smoketest) | Quick, visual health check of Smarty integration, plugin loading path, and important runtime semantics |
 | [wpexport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/wpexport) | Creates a SQL file to export FP data to wordpress. |
 
 ## Resources
