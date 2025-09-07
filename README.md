@@ -33,9 +33,10 @@ A few of them are known to be not functional correctly, some others have still t
 | Tool | Description |
 |---|---|
 | [blosxomimport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/blosxomimport) | Imports entries from the legacy blog system Blosxom to FlatPress. |
+| [burnout](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/burnout) | Self contained CLI benchmark to stress a FlatPress site with many requests and measure timings. |
 | [cuteimport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/cuteimport) | Imports data from CuteNews to FlatPress. |
 | [dump](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/dump) | Dumps useful informations about your FlatPress data. |
-| [Smarty5 smoketest](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/Smarty5-Smoketest) | Quick, visual health check of Smarty integration, plugin loading path, and important runtime semantics |
+| [Smarty5 smoketest](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/Smarty5-Smoketest) | Quick, visual health check of Smarty5 integration, plugin loading path, and important runtime semantics |
 | [wpexport](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-tools/wpexport) | Creates a SQL file to export FP data to wordpress. |
 
 ## Resources
