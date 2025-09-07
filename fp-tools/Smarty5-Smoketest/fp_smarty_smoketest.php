@@ -402,6 +402,43 @@ $results = [
 	'others' => ['info' => []],
 ];
 
+// Warm-up for FlatPress lazy registration:
+// If the Smarty-Plugins-Index exists, pre-load plugin/filter/resource files
+// so function_exists()/class_exists() reflect availability.
+try {
+	$spiFile = rtrim($cacheDir, '/\\') . '/smarty_plugins.index.php';
+	$spi = [];
+	if (is_file($spiFile)) {
+		$payload = @include $spiFile;
+		if (is_array($payload) && isset($payload['map']) && is_array($payload['map'])) {
+			$spi = $payload['map'];
+		}
+	}
+	if ($spi) {
+		// classic plugins
+		foreach (['function','block','modifier','modifiercompiler','compiler'] as $t) {
+			foreach (($spi[$t] ?? []) as $name => $path) {
+				@require_once $path;
+			}
+		}
+		// filters (index keys: pre|post|output|variable)
+		foreach (['pre','post','output','variable'] as $f) {
+			foreach (($spi['filters'][$f] ?? []) as $name => $path) {
+				@require_once $path;
+			}
+		}
+		// resources and helpers
+		foreach (($spi['resources'] ?? []) as $name => $path) {
+			@require_once $path;
+		}
+		foreach (($spi['helpers'] ?? []) as $path) {
+			@require_once $path;
+		}
+	}
+} catch (\Throwable $e) {
+	// ignore – warm-up is best-effort
+}
+
 foreach ($expected ['plugins'] as $ptype => $map) {
 	foreach ($map as $fn => $src) {
 		if (function_exists($fn)) {
