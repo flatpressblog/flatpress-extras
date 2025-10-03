@@ -5,7 +5,7 @@ Generate many FlatPress posts and comments for load testing, demos, or developme
 ---
 
 ## Requirements
-- FlatPress checked out and accessible (script lives in FlatPress root beside `defaults.php`).
+- FlatPress checked out and accessible ( script lives in FlatPress root beside `defaults.php` ).
 - PHP 7.2–8.4.
 - Write permissions for `fp-content/` and `fp-content/cache/`.
 - Optional: **prettyurls** plugin enabled. The script falls back to a file-based index if the plugin is not loaded.
