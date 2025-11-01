@@ -4,11 +4,14 @@ declare(strict_types=1);
 /**
  * gen-bulk.php — FlatPress Bulk Generator
  * CLI: php gen-bulk.php <entries> <comments_per_entry> [seed] [spread_days]
- * Web: gen-bulk.php?n=1000&k=5&seed=1234&spread=30
+ * Web: gen-bulk.php?n=3000&k=10&seed=1234&spread=90
  */
 
-@set_time_limit(0);
-@ignore_user_abort(true);
+@ignore_user_abort(true); // continue if client disconnects
+if (function_exists('set_time_limit')) {
+	@set_time_limit(0);
+}
+@ini_set('max_execution_time', '0'); // 0 = unlimited (PHP)
 
 /**
  * Bootstrap
@@ -49,7 +52,8 @@ $incFound = false;
 foreach ($incCandidates as $cand) {
 	if (is_file($cand)) {
 		require_once $cand;
-		$incFound = true; break;
+		$incFound = true;
+		break;
 	}
 }
 if (!$incFound) {
@@ -272,7 +276,7 @@ function read_params(): array {
 	if (PHP_SAPI === 'cli') {
 		global $argv;
 		$N = (int)($argv [1] ?? 0);
-		$K =(int)($argv [2] ?? 0);
+		$K = (int)($argv [2] ?? 0);
 		$SEED = isset($argv [3]) ? (int)$argv [3] : 1;
 		$SPREAD = (int)($argv [4] ?? 0);
 	} else {
