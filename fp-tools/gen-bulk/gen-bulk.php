@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * gen-bulk.php — FlatPress Bulk Generator
  * CLI: php gen-bulk.php <entries> <comments_per_entry> [seed] [spread_days]
- * Web: gen-bulk.php?n=3000&k=10&seed=1234&spread=90
+ * Web: gen-bulk.php?n=3000&k=10&seed=1234&spread=1080
  */
 
 @ignore_user_abort(true); // continue if client disconnects
@@ -167,8 +167,135 @@ function fp_prettyurls_index_add(string $slug, string $entryId, int $ts): void {
 }
 
 /**
+ * Prepares categories and subcategories for the bulk generator.
+ *
+ * - Creates a default category structure in categories.txt if necessary.
+ * - Ensures that the category cache (categories_encoded.dat) is set up.
+ * - Returns a list of [main category ID, subcategory ID] pairs.
+ */
+function bulkgen_prepare_categories(): array {
+	if (!defined('CONTENT_DIR')) {
+		return [];
+	}
+
+	$catFile = CONTENT_DIR . 'categories.txt';
+	$raw = '';
+
+	// Import existing categories (if available)
+	if (function_exists('io_load_file') && @file_exists($catFile)) {
+		$raw = (string) io_load_file($catFile);
+	} elseif (@file_exists($catFile)) {
+		$raw = (string) @file_get_contents($catFile);
+	}
+
+	// If nothing exists: Create default tree
+	if (trim($raw) === '') {
+		$defaultLines = [
+			'General :1',
+			'News :2',
+			'--Announcements :5',
+			'--Events :3',
+			'----Miscellaneous :6',
+			'Technology :4',
+			'Other :7',
+		];
+
+		$raw = implode("\n", $defaultLines) . "\n";
+
+		if (function_exists('io_write_file')) {
+			io_write_file($catFile, $raw);
+		} else {
+			@file_put_contents($catFile, $raw, LOCK_EX);
+		}
+	}
+
+	// Ensure that FlatPress builds/updates the category list and encoded cache
+	if (function_exists('entry_categories_encode')) {
+		// builds fp-content/content/categories_encoded.dat from $raw
+		@entry_categories_encode($raw);
+	}
+	if (function_exists('entry_categories_list')) {
+		// warms the flat [id => parent] cache
+		@entry_categories_list();
+	}
+
+	// Evaluate categories.txt according to (category, subcategory) pairs
+	$lines = explode("\n", $raw);
+	$parentsByDepth = [];
+	$meta = [];
+
+	foreach ($lines as $line) {
+		$line = rtrim($line);
+		if ($line === '') {
+			continue;
+		}
+
+		// Format: [- -]Name :ID
+		if (!preg_match('/^(-*)(.*?):\s*(\d+)\s*$/u', $line, $m)) {
+			continue;
+		}
+
+		$depth = strlen($m [1]);
+		$label = trim($m [2]);
+		$id = (int) $m [3];
+
+		$parent = null;
+		if ($depth > 0) {
+			$parent = $parentsByDepth [$depth - 1] ?? null;
+		}
+
+		$parentsByDepth [$depth] = $id;
+		$meta [$id] = [
+			'label' => $label,
+			'parent' => $parent,
+			'depth' => $depth,
+		];
+	}
+
+	$pairs = [];
+
+	foreach ($meta as $id => $info) {
+		if ($info ['parent'] === null) {
+			continue; // pure main category, no subcategory
+		}
+
+		// Run up to the top category
+		$top = $id;
+		$seen = [];
+		$p = $info ['parent'];
+		while ($p !== null && $p > 0 && !in_array($p, $seen, true)) {
+			$seen[] = $p;
+			$top = $p;
+			$p = $meta [$p] ['parent'] ?? null;
+		}
+
+		if ($top !== $id) {
+			// Subcategory (lower than level 0)
+			$pairs [] = [$top, $id];
+		} elseif ($info ['parent'] !== null) {
+			// Direkt unter einer Hauptkategorie
+			$pairs [] = [$info ['parent'], $id];
+		}
+	}
+
+	// Fallback: if there are only flat categories without hierarchy
+	if (!$pairs && $meta) {
+		foreach (array_keys($meta) as $id) {
+			$pairs [] = [$id, $id];
+		}
+	}
+
+	return $pairs;
+}
+
+/**
  * Generation
  */
+$bulkCategoryPairs = [];
+if (defined('CONTENT_DIR')) {
+	$bulkCategoryPairs = bulkgen_prepare_categories();
+}
+
 $createdEntries = 0;
 $failEntries = 0;
 $createdComments = 0;
@@ -189,6 +316,17 @@ for ($i = 0; $i < $N; $i++) {
 		'author' => 'bulkgen',
 		'format' => 'bbcode',
 	];
+
+	// Assign exactly one category + one subcategory to each entry
+	if (!empty($bulkCategoryPairs)) {
+		$pair = $bulkCategoryPairs[array_rand($bulkCategoryPairs)];
+		if (is_array($pair) && count($pair) === 2) {
+			$entry['categories'] = [
+				(int) $pair [0], // Main category
+				(int) $pair [1], // Subcategory
+			];
+		}
+	}
 
 	$eid = entry_save($entry);
 	if (!is_string($eid) || !preg_match('/^entry[0-9]{6}-[0-9]{6}$/', $eid)) {
@@ -261,7 +399,7 @@ foreach ($madeIds as $id) {
  * Report
  */
 out("");
-out("Requested: entries=$N comments_per_entry=$K => expected_comments=" . ($N*$K));
+out("Requested: entries=$N comments_per_entry=$K => expected_comments=" . ($N * $K));
 out("Created:   entries=$createdEntries (files=$totalEntryFiles) comments=$createdComments (files=$totalCommentFiles)");
 out("Failures:  entries=$failEntries comments=$failComments");
 if ($createdEntries !== $N || $createdComments !== $N * $K || $totalEntryFiles !== $N || $totalCommentFiles !== $N * $K) {
