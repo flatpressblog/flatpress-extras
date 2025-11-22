@@ -10,18 +10,18 @@ Place `burnout.php` anywhere. For FlatPress, you can drop it into your FlatPress
 
 ## Usage
 ```bash
-php burnout.php --url="https://example.com/flatpress"   --requests=500 --concurrency=20   --paths="/,/index.php,/?x=cat:general,/?x=tag:news,/?paged=2"   --warmup=10 --cache-bust=0 --timeout=30
+php burnout.php --url="https://example.com/flatpress"   --requests=200 --concurrency=8   --paths="/,/index.php,/?x=cat:general,/?x=tag:news,/?paged=1"   --warmup=10 --cache-bust=0 --timeout=240
 ```
 
 ### Parameters
 - `--url` (required): Base URL of your FlatPress site, without trailing slash.
-- `--requests` default `500`: Total number of requests.
-- `--concurrency` default `20`: Parallel connections when cURL is available.
+- `--requests` default `200`: Total number of requests.
+- `--concurrency` default `8`: Parallel connections when cURL is available.
 - `--paths` default `"/"`: Comma separated list of paths to rotate over. Each must start with `/`.
 - `--warmup` default `10`: Warmup requests before measuring.
 - `--cache-bust` `0|1`: Append a changing `?_bench=...` query to bypass caches.
 - `--header` repeatable: Extra HTTP headers (cURL only), e.g. `--header="Cookie: PHPSESSID=..."`.
-- `--timeout` default `30`: Per request timeout in seconds.
+- `--timeout` default `240`: Per request timeout in seconds.
 
 ### Output
 - Summary to STDOUT: OK/error counts, wall time, requests/sec, mean, p50/p90/p95/p99 latencies, transfer volume.
