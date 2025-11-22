@@ -128,21 +128,19 @@ if (isset($args ["paths"]) && trim((string)$args ["paths"]) !== "") {
 	// Specification: rotating standard paths
 	$paths = array(
 		"/index.php",
-		"/index.php/?x=feed:rss2",
-		"/index.php/?x=feed:atom",
+		"/?x=feed:rss2",
+		"/?x=feed:atom",
 		"/admin.php",
 		"/blog.php",
-		"/comments.php",
 		"/contact.php",
 		"/login.php",
-		"/search.php?q=flatpress&stype=full",
+		//"/search.php?q=flatpress&stype=full",
 		//"/search.php?q=caching&stype=full",
 		//"/search.php?q=performance&stype=full",
 		//"/search.php?q=category&stype=full",
 		//"/search.php?q=comment&stype=full",
 		//"/search.php?q=entry&stype=full",
 		//"/search.php?q=smarty",
-		"/static.php?page=about",
 		//"/static.php?page=check-your-email",
 		//"/static.php?page=invalid-email",
 		//"/static.php?page=invalid-token",
@@ -151,10 +149,10 @@ if (isset($args ["paths"]) && trim((string)$args ["paths"]) !== "") {
 		//"/static.php?page=subscription-confirmed",
 		//"/static.php?page=throttle-limit",
 		//"/static.php?page=unsubscribe-success",
-		//"/static.php?page=check-your-email",
+		"/static.php?page=about",
 		"/?random"
 	);
-}$headers = array();
+} $headers = array();
 if (isset($args ["header"])) {
 	if (is_array($args ["header"])) {
 		$headers = array_values(array_map('strval', $args ["header"]));
@@ -224,13 +222,39 @@ function do_sequential($urls, $timeout, $headers){
 			$contextOpts ["http"] ["header"] = implode("\r\n", $headers);
 		}
 		$ctx = stream_context_create($contextOpts);
-		$data = @file_get_contents($u, false, $ctx);
 		$t1 = microtime(true);
 		$code = 0;
-		if (isset($http_response_header) && is_array($http_response_header)) {
-			foreach ($http_response_header as $h) {
+		$headers = null;
+		$data = false;
+
+		if (function_exists('http_get_last_response_headers')) {
+			$data = @file_get_contents($u, false, $ctx);
+			$headers = http_get_last_response_headers();
+			if (function_exists('http_clear_last_response_headers')) {
+				http_clear_last_response_headers();
+			}
+		} else {
+			$fp = @fopen($u, 'r', false, $ctx);
+			if ($fp !== false) {
+				$data = stream_get_contents($fp);
+				$meta = stream_get_meta_data($fp);
+				fclose($fp);
+				if (isset($meta['wrapper_data'])) {
+					$headers = is_array($meta['wrapper_data']) ? $meta['wrapper_data'] : null;
+				}
+			} else {
+				$headers = @get_headers($u, 0, $ctx);
+				if ($headers !== false) {
+					$data = @file_get_contents($u, false, $ctx);
+				}
+			}
+		}
+
+		// HTTP-Status aus Headern extrahieren
+		if (is_array($headers)) {
+			foreach ($headers as $h) {
 				if (preg_match('#^HTTP/\S+\s+(\d{3})#', $h, $m)) {
-					$code = (int)$m [1];
+					$code = (int)$m[1];
 					break;
 				}
 			}
@@ -247,6 +271,11 @@ function do_sequential($urls, $timeout, $headers){
 		);
 	}
 	return $out;
+}
+
+function is_php85plus(): bool {
+	// @phpstan-ignore-next-line
+	return PHP_VERSION_ID >= 80500;
 }
 
 function do_multi($urls, $concurrency, $timeout, $headers){
@@ -318,7 +347,11 @@ function do_multi($urls, $concurrency, $timeout, $headers){
 				"starttransfer_time" => (float)$ci ['starttransfer_time'],
 			);
 			curl_multi_remove_handle($mh, $ch);
-			curl_close($ch);
+
+			if (!is_php85plus()) {
+				curl_close($ch);
+			}
+
 			unset($handles [(int)$ch]);
 
 			// Add next if any
