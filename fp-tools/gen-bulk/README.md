@@ -6,7 +6,7 @@ Generate many FlatPress posts and comments for load testing, demos, or developme
 
 ## Requirements
 - FlatPress checked out and accessible ( script lives in FlatPress root beside `defaults.php` ).
-- PHP 7.2–8.4.
+- PHP 7.2–8.5.
 - Write permissions for `fp-content/` and `fp-content/cache/`.
 - Optional: **prettyurls** plugin enabled. The script falls back to a file-based index if the plugin is not loaded.
 
@@ -25,13 +25,13 @@ Generate many FlatPress posts and comments for load testing, demos, or developme
 # Syntax
 php gen-bulk.php <entries> <comments_per_entry> [seed] [spread_days]
 
-# Example: 1,000 posts, 5 comments each, deterministic seed, 30 days date spread
-php gen-bulk.php 1000 5 1234 30
+# Example: 3,000 posts, 10 comments each, deterministic seed, 1080 days date spread
+php gen-bulk.php 3000 10 1234 1080
 ```
 
 ### Web
 ```
-http(s)://<host>/<path-to-flatpress>/gen-bulk.php?n=1000&k=5&seed=1234&spread=30
+http(s)://<host>/<path-to-flatpress>/gen-bulk.php?n=3000&k=10&seed=1234&spread=1080
 ```
 
 ### Parameters
@@ -106,7 +106,7 @@ http://localhost/flatpress/gen-bulk.php?n=50&k=2&seed=7&spread=5
 ---
 
 ## Compatibility
-- PHP 7.2–8.4.  
+- PHP 7.2–8.5.  
 - Smarty 5 untouched.  
 - Works with or without the PrettyURLs plugin (fallback index writer included).
 
