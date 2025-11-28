@@ -358,7 +358,7 @@ class plugin_tag_admin {
 
 		$tags = implode(', ', $tags);
 		$cont = trim($cont);
-		$cont .= "\n[tag]{$tags}[/tag]";
+		$cont .= "\n[tag]" . $tags . "[/tag]";
 
 		$_POST ['content'] = $cont;
 	}
@@ -427,7 +427,7 @@ class plugin_tag_admin {
 
 		$sugghtml = '<ul>';
 		foreach ($suggs as $sugg) {
-			$sugghtml .= "<li>{$sugg}</li>\n";
+			$sugghtml .= "<li>" . $sugg . "</li>\n";
 		}
 		$sugghtml .= '</ul>';
 

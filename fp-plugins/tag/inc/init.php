@@ -46,7 +46,7 @@ class plugin_tag_init {
 		// Load the database
 		$file = $this->tag_db->open_file($this->tag_db->tagfile($tag));
 
-		if (!count($file[$tag])) {
+		if (!isset($file [$tag]) || count($file [$tag]) === 0) {
 			// No entries or no tag: 404 error
 			$fp_params ['entry'] = 'entry000000-000000';
 			return false;
@@ -224,3 +224,4 @@ class plugin_tag_init {
 		return implode('/', $e);
 	}
 }
+?>

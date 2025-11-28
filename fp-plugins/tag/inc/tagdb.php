@@ -33,7 +33,7 @@ class tag_lister extends fs_filelister {
 	 * @return integer: See fs_filelister class
 	 */
 	function _checkFile($directory, $file) {
-		$f = "$directory/$file";
+		$f = $directory . "/" . $file;
 		if (fnmatch('*.txt', $f)) {
 			array_push($this->_list, basename($f, '.txt'));
 		}
@@ -212,7 +212,7 @@ class plugin_tag_db {
 		$string = '';
 		// Save every tag
 		foreach ($list as $tag => $entries) {
-			$string .= "{$tag} => " . $this->tagfile($tag) . " \n";
+			$string .= $tag . " => " . $this->tagfile($tag) . " \n";
 			$this->files [$this->tagfile($tag)] [$tag] = $entries;
 		}
 
@@ -321,3 +321,4 @@ class plugin_tag_db {
 		return false;
 	}
 }
+?>
