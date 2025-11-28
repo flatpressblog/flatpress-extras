@@ -8,6 +8,14 @@
  */
 class tag_prettyurls {
 
+	// Generic delegator to avoid hard failures if PrettyURLs adds new methods
+	public function __call($name, $arguments) {
+		if (isset($this->original) && is_object($this->original) && method_exists($this->original, $name)) {
+			return call_user_func_array(array($this->original, $name), $arguments);
+		}
+		return $arguments[0] ?? null;
+	}
+
 	// The "original" PrettyURLs
 	var $original = null;
 
@@ -107,3 +115,4 @@ class tag_prettyurls {
 		}
 	}
 }
+?>

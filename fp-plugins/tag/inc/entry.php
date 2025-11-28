@@ -48,7 +48,7 @@ class plugin_tag_entry {
 		global $smarty;
 
 		// To list tags in the template
-		$smarty->assignByRef('tags', $this->tags);
+		$smarty->assign('tags', $this->tags);
 		$smarty->registerPlugin('modifier', 'tagplugin_list', array(
 			&$this,
 			'smarty_modifier'
@@ -208,11 +208,13 @@ class plugin_tag_entry {
 
 		$titleadd = $count == 1 ? $plang ['oneentry'] : $count . $plang ['entries'];
 		$titleadd = "({$titleadd})";
-		$links [] = "\n" . '<a href="' . $link . '" title="' . $v . ' ' . $titleadd . '">' . $v . '</a>';
+		$links [] = '
+								<a href="' . $link . '" title="' . $v . ' ' . $titleadd . '">' . $v . '</a>';
 		}
 
 	return implode($glue, $links);
 	}
+
 
 	/**
 	 * tag_bottomlist
@@ -234,9 +236,17 @@ class plugin_tag_entry {
 			load_lang('plugin:tag');
 		}
 
-		$taglist = $lang ['plugin'] ['tag'] ['tag_s'];
+		// use the fontawesome bibiothek if function exist
+		if (function_exists('plugin_webfonts_head')) {
+			$taglist = '<i class="fa-solid fa-tags" aria-hidden="true"></i>';
+		} else {
+			$taglist = $lang ['plugin'] ['tag'] ['tag_s'];
+		}
+
 		$taglist .= $this->smarty_modifier($this->tags);
-		$content .= "\n<div class=\"plugin_tag_list\">{$taglist}</div>\n";
+		$content .= '
+							<div class="plugin_tag_list">' . $taglist . '
+							</div>';
 		return $content;
 	}
 
@@ -268,3 +278,4 @@ class plugin_tag_entry {
 	}
 
 }
+?>

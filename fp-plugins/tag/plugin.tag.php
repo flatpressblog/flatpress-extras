@@ -1,9 +1,9 @@
 <?php
 /*
  * Plugin Name: Tag
- * Version: 2.6.3
+ * Version: 2.6.5
  * Plugin URI: https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/tag
- * Description: Allows using tags in flatpress. This plugin requires BBCode
+ * Description: Allows using tags in FlatPress. This plugin requires BBCode
  * Author: Evaggelos Balaskas
  * Author URI: https://github.com/ebal/
  */
@@ -94,7 +94,7 @@ class plugin_tag {
 			$this->admin_class->use_rewrite = $this->rewrite_link;
 		}
 
-		// To be compatible with Flatpress style...
+		// To be compatible with FlatPress style...
 		add_filter('tag_link', array(
 			&$this,
 			'tag_link'
@@ -218,3 +218,4 @@ class plugin_tag {
 
 global $plugin_tag;
 $plugin_tag = new plugin_tag();
+?>

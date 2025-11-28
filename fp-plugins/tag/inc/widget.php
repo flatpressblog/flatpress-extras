@@ -162,8 +162,8 @@ class plugin_tag_widget {
 			$delta = PLUGIN_TAG_WMAX-PLUGIN_TAG_WMIN;
 			$unit = PLUGIN_TAG_WUN;
 			$format = '
-				<a href="%s" class="tag-%s" title="%s" style="font-size: %u' . $unit . ';">%s</a>' . ' ';
-			$code = '<div class="tagcloud">';
+							<a href="%s" class="tag-%s" title="%s" style="font-size: %u' . $unit . ';">%s</a>' . ' ';
+			$code = '	<div class="tagcloud">';
 			foreach ($tags as $tag => $perc) {
 				$l = apply_filters('tag_link', $tag);
 				$n = $cache [$tag] ['a'];
@@ -176,7 +176,7 @@ class plugin_tag_widget {
 				$code .= sprintf($format, $l, $d, $t, $s, $c);
 			}
 			$code = substr($code, 0, -1) . '
-			</div>';
+						</div>';
 		}
 
 		return array(
@@ -215,7 +215,7 @@ class plugin_tag_widget {
 			if (count($related) == 0) {
 				$code = $lang ['norelated'];
 			} else {
-				$code = '<ul class="pltag_related">';
+				$code = '	<ul class="pltag_related">';
 
 				foreach ($related as $id => $entry) {
 					$post = array('subject' => $entry ['subject']);
@@ -223,11 +223,11 @@ class plugin_tag_widget {
 
 					$entry ['subject'] = wp_specialchars($entry ['subject'], 1);
 					$code .= '
-						<li>&raquo; <a href="' . $link . '" title="' . $entry ['subject'] . '">' . $entry ['subject'] . '</a></li>';
+							<li>&raquo; <a href="' . $link . '" title="' . $entry ['subject'] . '">' . $entry ['subject'] . '</a></li>';
 				}
 
 				$code .= '
-			</ul>';
+						</ul>';
 			}
 		}
 
@@ -265,7 +265,7 @@ class plugin_tag_widget {
 			include $cachefile;
 
 			if (isset($cache [$id])) {
-				$related = $cache[$id];
+				$related = $cache [$id];
 				if (count($related) > $number) {
 					$related = array_slice($related, 0, $number);
 				}
@@ -345,3 +345,4 @@ class plugin_tag_widget {
 	}
 
 }
+?>
