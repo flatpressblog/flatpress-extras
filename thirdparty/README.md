@@ -75,19 +75,20 @@ Please contact us with a reasonable proof of authorship (e.g., access to the ori
 ## Contact & reporting
 
 - For bugs/compatibility issues: please open an **Issue** in this repository.
-- For reclaim/author inquiries: also use **Issues** (or Discussions, if enabled) to reach out.
+- For reclaim/author inquiries: also use **Issues** to reach out.
 
 ---
 
 ## Directory structure
 
 Typical layout (example):
-
+```
 thirdparty/
 ├─ plugins/
 │  └─ <plugin-name>/
 └─ themes/
    └─ <theme-name>/
+```
 
 Each project lives in its own subdirectory and should include a short description/attribution.
 
