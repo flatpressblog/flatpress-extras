@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Entry List
  * Version: 1.0.4
- * Plugin URI: http://www.vdfn.altervista.org/redirect/plugin_entrylist.html
+ * Plugin URI: https://www.pierov.org/2012/10/17/plugin-entrylist-v101-flatpress/
  * Description: This plugin add the [entrylist] tag to make the list of the entries. It needs BBCode.
  * Author: Piero VDFN
  * Author URI: https://www.vdfn.altervista.org/
