@@ -1,4 +1,4 @@
-# Entrylist (FlatPress Plugin)
+# Entrylist
 
 Author: [Piero Angelo @Piero VDFN](https://www.pierov.org/)
 
@@ -12,7 +12,7 @@ This plugin adds the BBCode tag `entrylist`. It requires the **BBCode** plugin a
 
 - FlatPress CMS
 - BBCode plugin enabled
-- PHP compatibility depends on your FlatPress build (this patched snapshot targets **PHP 7.2–8.5**)
+- PHP compatibility depends on your FlatPress build (this targets **PHP 7.2–8.5**)
 
 ## Installation
 
@@ -57,9 +57,9 @@ FlatPress allows admins to configure the site date/time format under:
 
 **Administration → Configuration → International settings**
 
-### Default behaviour (patched snapshot)
+### Default behaviour (1.0.4)
 
-- Day headings use the configured admin date format (`locale.dateformat`) **as-is**.
+- Day headings use the configured admin short date format (`locale.dateformatshort`) **as-is**.
 - Month and year headings are automatically derived from that admin date format.
 - You can override these defaults per tag with `yformat/mformat/dformat`.
 
@@ -121,7 +121,7 @@ Override heading formats:
 
 - The list is built from FlatPress entries and grouped by their entry date (the date stored in the entry id).
 - The plugin uses a cache file (`plugin_entrylist_tag.txt` in FlatPress' cache directory) and automatically invalidates it when entries are published or deleted.
-- Multiple `[entrylist]` tags on one page are supported (state is reset per tag in the patched snapshot).
+- Multiple `[entrylist]` tags on one page are supported (state is reset per tag).
 
 ## License
 
@@ -132,25 +132,12 @@ GNU GPLv2
 The FlatPress wiki historically listed these downloads:
 
 - `entrylist1_0_2.zip`
-- `entrylist1_0_4.zip`
 
-(Links are typically hosted on the FlatPress wiki resources area.)
-
-## Changelog (as recorded on the wiki)
+## Changelog
 
 - **2025-02-26: Version 1.0.2**
   - Compatibility with PHP 8.0+ established
-- **2026-01-02: Version 1.0.4**
-  - time format corrected
-
-## FlatPress snapshot / patched build notes
-
-This repository snapshot includes additional improvements:
-
-- Respects the admin-configured date format for headings (day headings use it directly; month/year are derived)
-- Accepts 4-digit years (2001–2099) in addition to `YY`
-- Per-tag state reset: multiple `[entrylist]` tags on one page no longer affect each other
 
 ## Support
 
-Please ask for help on the FlatPress forum (see the wiki entry for the current support link).
+Please ask for help on the [FlatPress forum](https://forum.flatpress.org/viewtopic.php?t=848).
