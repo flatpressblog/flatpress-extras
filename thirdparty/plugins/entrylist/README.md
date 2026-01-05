@@ -53,7 +53,7 @@ If no filter is given, the plugin outputs a hierarchical archive list (years →
 
 ## Date & time formats (important)
 
-FlatPress allows admins to configure the site date/time format under:
+FlatPress allows admins to configure the site short date format under:
 
 **Administration → Configuration → International settings**
 
