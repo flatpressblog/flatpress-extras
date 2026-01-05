@@ -1,0 +1,90 @@
+/**
+ * Crypto Top 10 Plugin Styles
+ * Optimized for sidebar display in leggerov2 theme
+ */
+
+.crypto-top10-container {
+	padding: 10px;
+	font-family: Arial, sans-serif;
+}
+
+.crypto-select-container {
+	margin-bottom: 15px;
+}
+
+.crypto-select-container label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #333;
+}
+
+.crypto-select {
+	width: 100%;
+	padding: 8px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.crypto-select:hover {
+	border-color: #4CAF50;
+}
+
+.crypto-select:focus {
+	outline: none;
+	border-color: #4CAF50;
+	box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.crypto-error {
+	padding: 10px;
+	margin-bottom: 15px;
+	background-color: #ffebee;
+	color: #c62828;
+	border: 1px solid #ef5350;
+	border-radius: 4px;
+	font-size: 13px;
+	text-align: center;
+}
+
+.crypto-chart-container {
+	position: relative;
+	width: 100%;
+	height: auto;
+	margin-top: 10px;
+}
+
+.crypto-chart-container canvas {
+	max-width: 100%;
+	height: auto !important;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+	.crypto-top10-container {
+		padding: 8px;
+	}
+	
+	.crypto-select {
+		font-size: 13px;
+		padding: 6px;
+	}
+	
+	.crypto-select-container label {
+		font-size: 13px;
+	}
+}
+
+/* Ensure the widget fits well in the sidebar */
+.widget .crypto-top10-container {
+	padding: 0;
+}
+
+.widget .crypto-chart-container {
+	margin-top: 10px;
+}
