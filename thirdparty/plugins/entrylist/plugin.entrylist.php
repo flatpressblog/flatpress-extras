@@ -1,20 +1,20 @@
 <?php
 /**
  * Plugin Name: Entry List
- * Version: 1.0.2
+ * Version: 1.0.4
  * Plugin URI: http://www.vdfn.altervista.org/redirect/plugin_entrylist.html
  * Description: This plugin add the [entrylist] tag to make the list of the entries. It needs BBCode.
  * Author: Piero VDFN
- * Author URI: http://www.vdfn.altervista.org/
+ * Author URI: https://www.vdfn.altervista.org/
  */
 
 // Turn off all error reporting
-error_reporting(0);
+//@error_reporting(0);
 
 /**
  * If a page is often visited it's better making a cache.
  */
-define('ENTRYLIST_CACHEFILE', CACHE_DIR.'plugin_entrylist_tag.txt');
+define('ENTRYLIST_CACHEFILE', CACHE_DIR . 'plugin_entrylist_tag.txt');
 
 /**
  * This class is the main class of the entrylist plugin.
@@ -78,6 +78,225 @@ class plugin_entrylist {
 	}
 
 	/**
+	 * Reset state for each [entrylist] tag call.
+	 * Prevents values from a previous tag from affecting subsequent tags.
+	 */
+	function resetState() {
+		$this->year = 0;
+		$this->month = 0;
+		$this->day = 0;
+
+		$this->initDefaultFormatsFromConfig();
+	}
+
+	/**
+	 * Initialize default heading formats from the admin-configured locale settings.
+	 * - Day headings: use locale['dateformatshort'] as-is
+	 * - Month/year headings: derived from locale['dateformatshort'] (keeps ordering + literals like "年", "月", "日")
+	 *
+	 * Tag attributes yformat/mformat/dformat can still override these defaults per usage.
+	 */
+	function initDefaultFormatsFromConfig() {
+		global $fp_config;
+
+		$datefmt = '%Y-%m-%d';
+		if (isset($fp_config ['locale'] ['dateformatshort']) && is_string($fp_config ['locale'] ['dateformatshort'])) {
+			$tmp = trim($fp_config ['locale'] ['dateformatshort']);
+			if ($tmp !== '') {
+				$datefmt = $tmp;
+			}
+		}
+
+		// Full day heading format
+		$this->fday = $datefmt;
+
+		// Derive month + year headings from the chosen format
+		$this->fmonth = $this->deriveFormatKeeping($datefmt, array('Y','y','G','g','m','b','B','h'));
+		if ($this->fmonth === '') {
+			$this->fmonth = '%B %Y';
+		}
+
+		$this->fyear = $this->deriveFormatKeeping($datefmt, array('Y','y','G','g'));
+		if ($this->fyear === '') {
+			$this->fyear = '%Y';
+		}
+	}
+
+	/**
+	 * Normalize year parameter.
+	 * Accepts: 1..99, 01..99 or 2001..2099. Returns two digits (01..99) or null.
+	 */
+	function normalizeYear($y) {
+		$y = trim((string)$y);
+		if ($y === '') {
+			return null;
+		}
+
+		// 4-digit year (2001..2099)
+		if (preg_match('/^\d{4}$/', $y)) {
+			$y4 = (int)$y;
+			if ($y4 < 2001 || $y4 > 2099) {
+				return null;
+			}
+			$y = substr($y, 2, 2);
+		}
+
+		// 1-2 digit year (1..99)
+		if (preg_match('/^\d{1,2}$/', $y)) {
+			$y = str_pad($y, 2, '0', STR_PAD_LEFT);
+			if ($y === '00') {
+				return null;
+			}
+			return $y;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Normalize month parameter. Accepts 1..12 or 01..12. Returns two digits or null.
+	 */
+	function normalizeMonth($m) {
+		$m = trim((string)$m);
+		if (!preg_match('/^\d{1,2}$/', $m)) {
+			return null;
+		}
+		$mi = (int)$m;
+		if ($mi < 1 || $mi > 12) {
+			return null;
+		}
+		return str_pad((string)$mi, 2, '0', STR_PAD_LEFT);
+	}
+
+	/**
+	 * Normalize day parameter. Accepts 1..31 or 01..31. Returns two digits or null.
+	 */
+	function normalizeDay($d) {
+		$d = trim((string)$d);
+		if (!preg_match('/^\d{1,2}$/', $d)) {
+			return null;
+		}
+		$di = (int)$d;
+		if ($di < 1 || $di > 31) {
+			return null;
+		}
+		return str_pad((string)$di, 2, '0', STR_PAD_LEFT);
+	}
+
+	/**
+	 * Build a timestamp for headings (year/month/day list items).
+	 * Returns an int timestamp or false.
+	 */
+	function makeHeadingTimestamp($year2, $month2, $day2) {
+		$year2 = (string)$year2;
+		$month2 = (string)$month2;
+		$day2 = (string)$day2;
+
+		if (!preg_match('/^\d{2}$/', $year2) || !preg_match('/^\d{2}$/', $month2) || !preg_match('/^\d{2}$/', $day2)) {
+			return false;
+		}
+
+		$year4 = 2000 + (int)$year2;
+		$m = (int)$month2;
+		$d = (int)$day2;
+
+		if (!checkdate($m, $d, $year4)) {
+			return false;
+		}
+
+		return mktime(0, 0, 0, $m, $d, $year4);
+	}
+
+	/**
+	 * Derive a strftime-compatible format string by keeping only selected token chars.
+	 * Also removes token-attached suffix literals when the token itself is removed (e.g. "%d." or "%d日").
+	 *
+	 * @param string $format Original format string (strftime style)
+	 * @param array $keepTokenChars List of token characters to keep (e.g. array('Y','m','B'))
+	 * @return string Derived + cleaned format string
+	 */
+	function deriveFormatKeeping($format, $keepTokenChars) {
+		$format = (string)$format;
+		$out = '';
+		$len = strlen($format);
+
+		for ($i = 0; $i < $len; $i++) {
+			$ch = $format [$i];
+
+			if ($ch !== '%') {
+				$out .= $ch;
+				continue;
+			}
+
+			// Lone '%' at end
+			if ($i + 1 >= $len) {
+				$out .= '%';
+				break;
+			}
+
+			$c1 = $format[$i + 1];
+			$token = '%' . $c1;
+			$tokenChar = $c1;
+			$consume = 2;
+
+			// POSIX modifiers %E? / %O?
+			if (($c1 === 'E' || $c1 === 'O') && ($i + 2) < $len) {
+				$token .= $format [$i + 2];
+				$tokenChar = $format [$i + 2];
+				$consume = 3;
+			}
+
+			// Advance to end of token
+			$i += ($consume - 1);
+
+			$keep = ($tokenChar === '%') || in_array($tokenChar, $keepTokenChars, true);
+			if ($keep) {
+				$out .= $token;
+			}
+
+			// Copy/skip literal suffix directly attached to the token (no whitespace, no '%')
+			$j = $i + 1;
+			while ($j < $len) {
+				$b = $format[$j];
+				if ($b === '%' || $b === ' ' || $b === "\t" || $b === "\n" || $b === "\r" || $b === "\0" || $b === "\x0B") {
+					break;
+				}
+				if ($keep) {
+					$out .= $b;
+				}
+				$j++;
+			}
+			$i = $j - 1;
+		}
+
+		return $this->cleanupDerivedFormat($out);
+	}
+
+	/**
+	 * Cleanup derived format strings by removing leftover punctuation/separators and empty brackets.
+	 */
+	function cleanupDerivedFormat($format) {
+		$format = (string)$format;
+
+		// Collapse whitespace
+		$format = preg_replace('/\s+/u', ' ', $format);
+
+		// Remove empty brackets (common with formats like "... (%A)")
+		$format = preg_replace('/\(\s*\)/u', '', $format);
+		$format = preg_replace('/\[\s*\]/u', '', $format);
+		$format = preg_replace('/\{\s*\}/u', '', $format);
+
+		$format = trim($format);
+
+		// Trim leading/trailing punctuation and separators (also lone brackets)
+		$format = trim($format, " \t\n\r\0\x0B,.;:/\\|()[]{}<>-");
+		$format = trim($format);
+
+		return $format;
+	}
+
+
+	/**
 	 * Delete cache. It's used as callback.
 	 *
 	 * @return boolean: True
@@ -135,6 +354,9 @@ class plugin_entrylist {
 		}
 
 		$return = '';
+		$what = '';
+		$m = $this->month;
+		$d = $this->day;
 
 		// What are we listing?
 		switch(0) {
@@ -161,20 +383,26 @@ class plugin_entrylist {
 		$format = 'f' . $what;
 
 		// Make the list or just output?
-		$ul = !empty($this->$format) || empty($what);
+		$ul = ((!empty($what) && property_exists($this, $format) && !empty($this->$format)) || empty($what));
 
 		foreach($list as $id => $subject) {
 			$mod = $id;
 
-			$strtotime = '20' . $this->year . "/" . $m . "/" . $d;
+			$timestamp = $this->makeHeadingTimestamp($this->year, $m, $d);
 
-			if($ul) {
-				$return .= '<li>';
-				$date = theme_date_format(strtotime($strtotime), $this->$format);
-				$return .= "\n<p>" . $date . "</p>\n";
+			if ($timestamp === false) {
+				$timestamp = strtotime('20' . $this->year . "/" . $m . "/" . $d);
 			}
 
-			if(is_array($subject)) {
+			if ($ul) {
+				$return .= '<li>';
+				if (!empty($what) && property_exists($this, $format) && !empty($this->$format)) {
+					$date = theme_date_format($timestamp, $this->$format);
+					$return .= "\n<p>" . $date . "</p>\n";
+				}
+			}
+
+			if (is_array($subject)) {
 				// Recurse
 				$add = $this->listEntries($subject, $link, $sort);
 
@@ -186,7 +414,7 @@ class plugin_entrylist {
 				$return .= $add;
 			} else {
 				// Is the entry
-				if($link) {
+				if ($link) {
 					// Make the link
 					$oldpost = $post;
 					$post = array('subject' => $subject);
@@ -194,13 +422,13 @@ class plugin_entrylist {
 					$post = $oldpost;
 
 					// Add the link
-					$return .= '<a href="' . $href . '">'.wp_specialchars($subject) . '</a>';
+					$return .= '<a href="' . $href . '">' . wp_specialchars($subject) . '</a>';
 				} else {
-					$return.=wp_specialchars($subject);
+					$return .= wp_specialchars($subject);
 				}
 			}
 
-			if($ul) {
+			if ($ul) {
 				$return .= '</li>';
 			}
 
@@ -208,7 +436,7 @@ class plugin_entrylist {
 			$return .= "\n";
 		}
 
-		if(empty($return)) {
+		if (empty($return)) {
 			return '';
 		}
 
@@ -232,66 +460,82 @@ class plugin_entrylist {
 	 * @return string: The replacement
 	 */
 	function tag($action, $attributes, $content, $params, $node_object) {
-		if($action == 'validate') {
+		if ($action == 'validate') {
 			return true;
 		}
+
+		$this->resetState();
 
 		$list = (array)$this->getEntriesList();
 
 		// Just an year or a month or a day
-		if(isset($attributes ['y'])) {
-			$y = $attributes ['y'];
-			$list = isset($list [$y]) ? (array) $list [$y] : [];
-			$this->year = $y;
+		if (isset($attributes ['y'])) {
+			$y = $this->normalizeYear($attributes ['y']);
 
-			if(isset($attributes ['m'])) {
-				$m = $attributes ['m'];
-				if(strlen($m) == 1) {
-					$m = '0'.$m;
-				}
-				$list = (array)@$list [$m];
-				$this->month = $m;
+			if ($y === null) {
+				$list = [];
+			} else {
+				$list = isset($list [$y]) ? (array)$list [$y] : [];
+				$this->year = $y;
 
-				if(isset($attributes ['d'])) {
-					$d = $attributes ['d'];
-					if(strlen($d) == 1) {
-						$d = '0'.$d;
+				if (isset($attributes ['m'])) {
+					$m = $this->normalizeMonth($attributes ['m']);
+
+					if ($m === null) {
+						$list = [];
+					} else {
+						$list = isset($list [$m]) ? (array)$list [$m] : [];
+						$this->month = $m;
+
+						if (isset($attributes ['d'])) {
+							$d = $this->normalizeDay($attributes ['d']);
+
+							if ($d === null) {
+								$list = [];
+							} else {
+								$year4 = 2000 + (int)$this->year;
+
+								if (!checkdate((int)$this->month, (int)$d, $year4)) {
+									$list = [];
+								} else {
+									$list = isset($list [$d]) ? (array)$list [$d] : [];
+									$this->day = $d;
+								}
+							}
+						}
 					}
-					$list = (array)@$list [$d];
-					$this->day = $d;
 				}
-
 			}
-
 		}
 
+
 		// If list is empty
-		if(!empty($attributes ['noentries']) && !count($list)) {
+		if (!empty($attributes ['noentries']) && !count($list)) {
 			return $attributes ['noentries'];
 		} elseif(!count($list)) {
 			return 'There aren\'t entries.';
 		}
 
 		// Format of the date... date_format compatible
-		if(isset($attributes ['yformat'])) {
+		if (isset($attributes ['yformat'])) {
 			$this->fyear = $attributes ['yformat'];
 		}
-		if(isset($attributes ['mformat'])) {
+		if (isset($attributes ['mformat'])) {
 			$this->fmonth = $attributes ['mformat'];
 		}
-		if(isset($attributes ['dformat'])) {
+		if (isset($attributes ['dformat'])) {
 			$this->fday = $attributes ['dformat'];
 		}
 
 		// Make the link?
 		$link = true;
-		if(isset($attributes ['link'])) {
+		if (isset($attributes ['link'])) {
 			$link = !($attributes ['link'] == 'false' || $attributes ['link'] == 'off');
 		}
 
 		// Sort callback for the list
 		$sort = 'ksort';
-		if(@$attributes ['sort'] == 'desc') {
+		if (@$attributes ['sort'] == 'desc') {
 			$sort = 'krsort';
 		}
 
