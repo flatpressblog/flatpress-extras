@@ -133,6 +133,10 @@ The [FlatPress wiki](https://wiki.flatpress.org/res:plugins:entrylist) historica
 
 - `entrylist1_0_2.zip`
 
+[Pieros Blog](https://www.pierov.org/2012/10/17/plugin-entrylist-v101-flatpress/) has listed the following downloads in the past:
+
+- `entrylist_v1.0.1.tar.gz`
+
 ## Changelog
 
 - **2026-01-05: Version 1.0.4**
