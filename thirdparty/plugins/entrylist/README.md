@@ -129,11 +129,16 @@ GNU GPLv2
 
 ## Download
 
-The FlatPress wiki historically listed these downloads:
+The [FlatPress wiki](https://wiki.flatpress.org/res:plugins:entrylist) historically listed these downloads:
 
 - `entrylist1_0_2.zip`
 
 ## Changelog
+
+- **2026-01-05: Version 1.0.4**
+  - Respects the admin-configured short date format
+  - Accepts 4-digit years (2001–2099) in addition to YY
+  - Per-tag state reset: multiple `[entrylist]` tags on one page no longer affect each other
 
 - **2025-02-26: Version 1.0.2**
   - Compatibility with PHP 8.0+ established
