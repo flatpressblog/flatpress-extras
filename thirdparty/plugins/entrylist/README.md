@@ -12,7 +12,7 @@ This plugin adds the BBCode tag `entrylist`. It requires the **BBCode** plugin a
 
 - FlatPress CMS
 - BBCode plugin enabled
-- PHP compatibility depends on your FlatPress build (this targets **PHP 7.2–8.5**)
+- PHP 7.2–8.5
 
 ## Installation
 
@@ -50,6 +50,7 @@ If no filter is given, the plugin outputs a hierarchical archive list (years →
 | `link`      | `on/off` (also `false`) | Whether entry titles should link to the entry. Default: `on`. Use `off` or `false` to disable.                                             |
 | `sort`      | `asc/desc`              | Sorting order. Default: `asc`. Applies to years/months/days and also to entries within a day (by entry id / time).                         |
 | `noentries` | text                    | If the resulting list is empty, output this text instead.                                                                                  |
+| `+FORMAT`   | time format             | Output format for time (strftime-style tokens). Override the entry time (e.g. `[entrylist=+%H:%M y=23]`).                                  |
 
 ## Date & time formats (important)
 
@@ -62,10 +63,10 @@ FlatPress allows admins to configure the site short date format under:
 - Day headings use the configured admin short date format (`locale.dateformatshort`) **as-is**.
 - Month and year headings are automatically derived from that admin date format.
 - You can override these defaults per tag with `yformat/mformat/dformat`.
+- The default time format comes from the admin setting `locale.timeformat`.
+- You can override the entry time format for a single `[entrylist]` tag.
 
 This means the Entrylist headings follow the admin-configured formats for many locales (e.g. German, English, Spanish, French, Italian, Greek, Dutch, Danish, Czech, Japanese, Portuguese/Brazil, Russian, Turkish, …), including formats with literal characters like `年/月/日`.
-
-> Note: The plugin does not output time by default (only headings + entry titles). If you need time output, it can be added as an optional feature.
 
 ## Examples
 
@@ -117,11 +118,27 @@ Override heading formats:
 [entrylist y=23 yformat="%Y" mformat="%B %Y" dformat="%A, %e. %B %Y"]
 ```
 
+Override the entry time format (per tag):
+
+```text
+[entrylist=+%H:%M y=23]
+```
+
+Overwrite heading and entry time (1.0.3 like):
+```text
+[entrylist=+%H:%M y=23 yformat="%Y" mformat="%B" dformat="%d."]
+```
+
 ## Notes
 
 - The list is built from FlatPress entries and grouped by their entry date (the date stored in the entry id).
 - The plugin uses a cache file (`plugin_entrylist_tag.txt` in FlatPress' cache directory) and automatically invalidates it when entries are published or deleted.
 - Multiple `[entrylist]` tags on one page are supported (state is reset per tag).
+- The entry time is wrapped in a span you can style via CSS:
+
+  ```html
+  <span class="entrylist-time">14:30</span>
+  ```
 
 ## License
 
@@ -140,7 +157,7 @@ The [FlatPress wiki](https://wiki.flatpress.org/res:plugins:entrylist) historica
 ## Changelog
 
 - **2026-01-05: Version 1.0.4**
-  - Respects the admin-configured short date format
+  - Respects the admin-configured short date and time format
   - Accepts 4-digit years (2001–2099) in addition to YY
   - Per-tag state reset: multiple `[entrylist]` tags on one page no longer affect each other
 
