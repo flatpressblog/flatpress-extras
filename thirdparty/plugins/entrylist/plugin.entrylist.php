@@ -5,7 +5,7 @@
  * Plugin URI: https://www.pierov.org/2012/10/17/plugin-entrylist-v101-flatpress/
  * Description: This plugin add the [entrylist] tag to make the list of the entries. It needs BBCode.
  * Author: Piero VDFN
- * Author URI: https://www.vdfn.altervista.org/
+ * Author URI: https://www.pierov.org/
  */
 
 // Turn off all error reporting
@@ -69,6 +69,14 @@ class plugin_entrylist {
 	var $fday = '%d';
 
 	/**
+	 * This is the format of the entry time (always without seconds).
+	 * It must be compatible with date_format.
+	 *
+	 * @var string
+	 */
+	var $ftime = '%H:%M';
+
+	/**
 	 * This function is the constructor.
 	 */
 	function __construct() {
@@ -120,6 +128,99 @@ class plugin_entrylist {
 		if ($this->fyear === '') {
 			$this->fyear = '%Y';
 		}
+
+		// Default entry time format
+		$timefmt = '%H:%M';
+		if (isset($fp_config ['locale'] ['timeformat']) && is_string($fp_config ['locale'] ['timeformat'])) {
+			$tmp = trim($fp_config ['locale'] ['timeformat']);
+			if ($tmp !== '') {
+				$timefmt = $tmp;
+			}
+		}
+		$this->ftime = $this->normalizeTimeFormat($timefmt);
+	}
+
+	/**
+	 * Normalize a time format string.
+	 * Accepts strftime-compatible formats (as used by theme_date_format/date_strformat).
+	 * - Expands common composite tokens (%T, %r, %X).
+	 * - Removes %S / %ES / %OS including directly attached suffix literals.
+	 * - Removes separators immediately before the seconds token (e.g. ":" in "%H:%M:%S").
+	 *
+	 * @param string $format
+	 * @return string
+	 */
+	function normalizeTimeFormat($format) {
+		$format = trim((string)$format);
+		if ($format === '') {
+			return '%H:%M';
+		}
+
+		// Expand composite tokens that may include seconds
+		$format = str_replace('%T', '%H:%M:%S', $format); // %T = %H:%M:%S
+		$format = str_replace('%r', '%I:%M:%S %p', $format); // %r = %I:%M:%S %p
+		// %X is locale-dependent and often includes seconds (MEDIUM); force a safe baseline
+		$format = str_replace('%X', '%H:%M:%S', $format);
+
+		$out = '';
+		$len = strlen($format);
+
+		for ($i = 0; $i < $len; $i++) {
+			$ch = $format[$i];
+			if ($ch !== '%') {
+				$out .= $ch;
+				continue;
+			}
+
+			// Lone '%' at end
+			if ($i + 1 >= $len) {
+				$out .= '%';
+				break;
+			}
+
+			$c1 = $format[$i + 1];
+			$token = '%' . $c1;
+			$tokenChar = $c1;
+			$consume = 2;
+
+			// POSIX modifiers %E? / %O?
+			if (($c1 === 'E' || $c1 === 'O') && ($i + 2) < $len) {
+				$token .= $format [$i + 2];
+				$tokenChar = $format [$i + 2];
+				$consume = 3;
+			}
+
+			// Advance to end of token
+			$i += ($consume - 1);
+
+			$remove = ($tokenChar === 'S'); // Seconds token (also when prefixed by %E/%O)
+			if ($remove) {
+				// Remove typical separators right before the seconds token (e.g. ":" in "%H:%M:%S")
+				$out = rtrim($out, " \t\n\r\0\x0B:.,;/\\|-");
+			} else {
+				$out .= $token;
+			}
+
+			// Copy/skip literal suffix directly attached to the token (no whitespace, no '%')
+			$j = $i + 1;
+			while ($j < $len) {
+				$b = $format [$j];
+				if ($b === '%' || $b === ' ' || $b === "\t" || $b === "\n" || $b === "\r" || $b === "\0" || $b === "\x0B") {
+					break;
+				}
+				if (!$remove) {
+					$out .= $b;
+				}
+				$j++;
+			}
+			$i = $j - 1;
+		}
+
+		$out = $this->cleanupDerivedFormat($out);
+		if ($out === '') {
+			$out = '%H:%M';
+		}
+		return $out;
 	}
 
 	/**
@@ -398,7 +499,7 @@ class plugin_entrylist {
 				$return .= '<li>';
 				if (!empty($what) && property_exists($this, $format) && !empty($this->$format)) {
 					$date = theme_date_format($timestamp, $this->$format);
-					$return .= "\n<p>" . $date . "</p>\n";
+					$return .= "\n<p><strong>" . $date . "</strong></p>\n";
 				}
 			}
 
@@ -413,6 +514,16 @@ class plugin_entrylist {
 
 				$return .= $add;
 			} else {
+				// Prepend entry time
+				if (!empty($this->ftime) && is_string($id)) {
+					$edate = date_from_id($id);
+					if (is_array($edate) && isset($edate ['time'])) {
+						$etime = theme_date_format($edate ['time'], $this->ftime);
+						if ($etime !== '') {
+							$return .= '<span class="entrylist-time">' . wp_specialchars($etime) . '</span> ';
+						}
+					}
+				}
 				// Is the entry
 				if ($link) {
 					// Make the link
@@ -467,6 +578,14 @@ class plugin_entrylist {
 		$this->resetState();
 
 		$list = (array)$this->getEntriesList();
+
+		// Optional: override entry time format via [entrylist=+FORMAT]
+		if (isset($attributes ['default']) && is_string($attributes ['default'])) {
+			$tmp = trim($attributes ['default']);
+			if ($tmp !== '' && $tmp [0] === '+') {
+				$this->ftime = $this->normalizeTimeFormat(substr($tmp, 1));
+			}
+		}
 
 		// Just an year or a month or a day
 		if (isset($attributes ['y'])) {
