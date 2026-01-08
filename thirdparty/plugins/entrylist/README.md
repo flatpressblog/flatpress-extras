@@ -1,6 +1,6 @@
 # Entrylist
 
-Author: [Piero Angelo @Piero VDFN](https://www.pierov.org/)
+Author: [Pier Angelo Vendrame @Piero VDFN](https://www.pierov.org/)
 
 ## Description
 
