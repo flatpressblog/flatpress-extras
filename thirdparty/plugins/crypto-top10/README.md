@@ -137,6 +137,8 @@ The plugin gracefully handles:
 
 GNU General Public License v2 (GPLv2) - Same as FlatPress
 
+The assets/chart.min.js library is subject to the [MIT license](https://github.com/flatpressblog/flatpress-extras/blob/master/thirdparty/plugins/crypto-top10/assets/LICENSE.md).
+
 ## Credits
 
 - Developed for FlatPress
