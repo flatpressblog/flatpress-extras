@@ -18,6 +18,7 @@ A few of them are known to be not functional correctly, some others have still t
 | [datechanger](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/datechanger) | Lets you change the publish date for (new) entries. | ✔️ Works fine! :) |
 | [downloadctr](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/downloadctr) | Adds a BBCode "download" tag for a download counter | ✔️ Works fine! :) |
 | [frontpage](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/frontpage) | Sets a default category to display on the front page. | ✔️ Works fine! :) |
+| [iCalFeed](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/icalfeed) | Display upcoming appointments or availability from one or more iCalendar (ICS) feeds. | ✔️ Works fine! :) |
 | [lightbox2](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/lightbox2) | Lightbox overlays using SlimBox 2 requires jQuery (modified jsutils plugin) | ✔️ Works fine! :) |
 | [lastcommentsadmin](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/lastcommentsadmin) | Manage the cache of the LastComments plugin. | ✔️ Works fine! :) |
 | [macros](https://github.com/flatpressblog/flatpress-extras/tree/master/fp-plugins/macros) |  | ❔ *unknown* |
