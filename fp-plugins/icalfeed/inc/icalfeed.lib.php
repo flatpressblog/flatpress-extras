@@ -89,31 +89,59 @@ function icalfeed_http_get($url, $timeoutSeconds = 10, &$httpCode = null, &$erro
 
 	$ctx = stream_context_create(array(
 		'http' => array(
+			'method' => 'GET',
 			'timeout' => $timeoutSeconds,
+			'ignore_errors' => true,
 			'header' => "Accept: text/calendar, text/plain, */*\r\nUser-Agent: FlatPress iCalFeed\r\n"
 		),
 		'ssl' => array(
 			'verify_peer' => $sslVerify ? true : false,
-			'verify_peer_name' => $sslVerify ? true : false
+			'verify_peer_name' => $sslVerify ? true : false,
+			'allow_self_signed' => $sslVerify ? false : true
 		)
 	));
 
-	$body = @file_get_contents($url, false, $ctx);
+	$fp = @fopen($url, 'rb', false, $ctx);
+	if ($fp === false) {
+		$error = 'stream_open_failed';
+		return null;
+	}
+
+	$body = stream_get_contents($fp);
+	$meta = stream_get_meta_data($fp);
+	fclose($fp);
+
 	if ($body === false) {
 		$error = 'stream_failed';
 		return null;
 	}
 
-	// Try to extract HTTP status code
+	// Try to extract HTTP status code from wrapper metadata (avoids deprecated HTTP wrapper response-header variable on PHP 8.5+)
 	$code = null;
-	if (isset($http_response_header) && is_array($http_response_header)) {
-		foreach ($http_response_header as $hdr) {
-			if (preg_match('~^HTTP/\S+\s+(\d{3})~', (string) $hdr, $m)) {
+	$headers = null;
+	if (is_array($meta) && isset($meta ['wrapper_data'])) {
+		$wd = $meta ['wrapper_data'];
+		if (is_array($wd)) {
+			$headers = $wd;
+		} elseif (is_string($wd) && $wd !== '') {
+			$headers = array($wd);
+		}
+	}
+
+	// Fallback: PHP 8.4+ provides http_get_last_response_headers()
+	if ($headers === null && function_exists('http_get_last_response_headers')) {
+		$headers = http_get_last_response_headers();
+	}
+
+	if (is_array($headers)) {
+		foreach ($headers as $hdr) {
+			if (preg_match('~^HTTP/\\S+\\s+(\\d{3})~', (string) $hdr, $m)) {
+				// keep last status line (handles redirects)
 				$code = (int) $m [1];
-				break;
 			}
 		}
 	}
+
 	$httpCode = $code;
 	if ($httpCode !== null && $httpCode >= 400) {
 		$error = 'http_' . (string) $httpCode;
