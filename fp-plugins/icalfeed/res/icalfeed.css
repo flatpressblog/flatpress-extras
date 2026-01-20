@@ -1,0 +1,53 @@
+.icalfeed {
+	margin: 0.5em 0;
+}
+
+.icalfeed-title {
+	margin: 0 0 0.5em 0;
+}
+
+.icalfeed-note,
+.icalfeed-error,
+.icalfeed-empty {
+	padding: 0.4em 0.6em;
+	border: 1px solid rgba(0,0,0,0.12);
+	border-radius: 6px;
+	margin: 0.5em 0;
+}
+
+.icalfeed-error {
+	border-color: rgba(180,0,0,0.35);
+}
+
+.icalfeed-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.icalfeed-item {
+	padding: 0.35em 0;
+	border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.icalfeed-item:last-child {
+	border-bottom: 0;
+}
+
+.icalfeed-when {
+	display: inline-block;
+	min-width: 12em;
+	margin-right: 0.6em;
+	white-space: nowrap;
+}
+
+.icalfeed-allday,
+.icalfeed-busy {
+	font-style: italic;
+	margin-left: 0.4em;
+}
+
+.icalfeed-location {
+	margin-left: 0.6em;
+	opacity: 0.85;
+}
