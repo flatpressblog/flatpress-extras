@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: iCalFeed
- * Version: 1.0.0
+ * Version: 1.0.2
  * Plugin URI: https://frank-web.dedyn.io
  * Author: Fraenkiman
  * Author URI: https://frank-web.dedyn.io
@@ -158,27 +158,95 @@ function icalfeed_normalize_urls($raw) {
 }
 
 /**
- * Check whether APCu is available and enabled for this SAPI.
+ * Check whether APCu is available and enabled for this request.
+ * Prefer FlatPress core wrapper is_apcu_on() when present.
  * @return bool
  */
 function icalfeed_apcu_available() {
+	if (function_exists('is_apcu_on')) {
+		return (bool) is_apcu_on();
+	}
 	if (!function_exists('apcu_fetch') || !function_exists('apcu_store')) {
 		return false;
 	}
-	if (PHP_SAPI === 'cli') {
+	// CLI/phpdbg require apc.enable_cli=1
+	if (in_array(PHP_SAPI, array('cli', 'phpdbg'), true)) {
 		$cli = ini_get('apc.enable_cli');
-		return ($cli !== false && (string)$cli !== '' && (string)$cli !== '0');
+		return ($cli !== false && (string) $cli !== '' && (string) $cli !== '0');
 	}
 	$enabled = ini_get('apc.enabled');
 	if ($enabled === false) {
 		// Some SAPIs may not expose this ini setting; assume enabled if extension loaded.
 		return true;
 	}
-	return ((string)$enabled !== '0');
+	return ((string) $enabled !== '0');
 }
 
 /**
- * APCu generation token (changes when cache cleared).
+ * APCu fetch (prefers FlatPress core wrapper apcu_get()).
+ * @param string $key
+ * @param bool $hit
+ * @return mixed|null
+ */
+function icalfeed_apcu_fetch($key, &$hit) {
+	$hit = false;
+	if (!icalfeed_apcu_available()) {
+		return null;
+	}
+	if (function_exists('apcu_get')) {
+		// FlatPress wrapper adds instance namespace via apcu_key()
+		return apcu_get((string) $key, $hit);
+	}
+	// Fallback (no instance namespace)
+	return apcu_fetch((string) $key, $hit);
+}
+
+/**
+ * APCu store (prefers FlatPress core wrapper apcu_set()).
+ * @param string $key
+ * @param mixed $val
+ * @param int $ttl
+ * @return bool
+ */
+function icalfeed_apcu_store($key, $val, $ttl) {
+	if (!icalfeed_apcu_available()) {
+		return false;
+	}
+	$ttl = (int) $ttl;
+	if ($ttl < 0) {
+		$ttl = 0;
+	}
+	if (function_exists('apcu_set')) {
+		// FlatPress wrapper adds instance namespace via apcu_key()
+		return (bool) apcu_set((string) $key, $val, $ttl);
+	}
+	// Fallback (no instance namespace)
+	return (bool) apcu_store((string) $key, $val, $ttl);
+}
+
+/**
+ * APCu increment (prefers FlatPress core wrapper apcu_incr()).
+ * @param string $key
+ * @param int $step
+ * @param bool $success
+ * @return int|false
+ */
+function icalfeed_apcu_incr($key, $step, &$success) {
+	$success = false;
+	if (!icalfeed_apcu_available()) {
+		return false;
+	}
+	if (function_exists('apcu_incr')) {
+		// FlatPress wrapper adds instance namespace via apcu_key()
+		return apcu_incr((string) $key, (int) $step, $success);
+	}
+	// Fallback (no instance namespace)
+	return apcu_inc((string) $key, (int) $step, $success);
+}
+
+/**
+ * APCu generation token (changes when cache is cleared).
+ * Stored under instance-prefixed key via FlatPress wrappers when available.
  * @return int
  */
 function icalfeed_cache_gen() {
@@ -186,11 +254,11 @@ function icalfeed_cache_gen() {
 		return 1;
 	}
 	$hit = false;
-	$val = apcu_fetch('fp:icalfeed:gen', $hit);
+	$val = icalfeed_apcu_fetch('icalfeed:gen', $hit);
 	if ($hit && is_numeric($val)) {
-		return (int)$val;
+		return (int) $val;
 	}
-	apcu_store('fp:icalfeed:gen', 1, 0);
+	icalfeed_apcu_store('icalfeed:gen', 1, 0);
 	return 1;
 }
 
@@ -203,9 +271,9 @@ function icalfeed_cache_bump() {
 		return;
 	}
 	$success = false;
-	$val = apcu_inc('fp:icalfeed:gen', 1, $success);
+	$val = icalfeed_apcu_incr('icalfeed:gen', 1, $success);
 	if (!$success || !is_numeric($val)) {
-		apcu_store('fp:icalfeed:gen', 1, 0);
+		icalfeed_apcu_store('icalfeed:gen', 1, 0);
 	}
 }
 
@@ -226,26 +294,24 @@ function icalfeed_cache_file($key) {
  * @return array|null
  */
 function icalfeed_cache_get($key, $ttl) {
-	$ttl = (int)$ttl;
-	if ($ttl < 0) {
-		$ttl = 0;
+	$ttl = (int) $ttl;
+	// TTL <= 0 disables caching entirely (APCu + file cache)
+	if ($ttl <= 0) {
+		return null;
 	}
 
 	// APCu (fast)
 	if (icalfeed_apcu_available()) {
-		$apcuKey = 'fp:icalfeed:' . icalfeed_cache_gen() . ':' . sha1($key);
+		$apcuKey = 'icalfeed:' . icalfeed_cache_gen() . ':' . sha1((string) $key);
 		$hit = false;
-		$val = apcu_fetch($apcuKey, $hit);
+		$val = icalfeed_apcu_fetch($apcuKey, $hit);
 		if ($hit && is_array($val)) {
 			return $val;
 		}
 	}
 
 	// File cache
-	if ($ttl === 0) {
-		return null;
-	}
-	$file = icalfeed_cache_file($key);
+	$file = icalfeed_cache_file((string) $key);
 	if (!is_file($file)) {
 		return null;
 	}
@@ -253,7 +319,7 @@ function icalfeed_cache_get($key, $ttl) {
 	if (!$mtime) {
 		return null;
 	}
-	if (time() - (int)$mtime > $ttl) {
+	if (time() - (int) $mtime > $ttl) {
 		return null;
 	}
 	$json = @file_get_contents($file);
@@ -266,12 +332,11 @@ function icalfeed_cache_get($key, $ttl) {
 	}
 	// Promote to APCu
 	if (icalfeed_apcu_available()) {
-		$apcuKey = 'fp:icalfeed:' . icalfeed_cache_gen() . ':' . sha1($key);
-		apcu_store($apcuKey, $data, $ttl);
+		$apcuKey = 'icalfeed:' . icalfeed_cache_gen() . ':' . sha1((string) $key);
+		icalfeed_apcu_store($apcuKey, $data, $ttl);
 	}
 	return $data;
 }
-
 /**
  * Set cached data.
  * @param string $key
@@ -280,21 +345,18 @@ function icalfeed_cache_get($key, $ttl) {
  * @return void
  */
 function icalfeed_cache_set($key, $data, $ttl) {
-	$ttl = (int)$ttl;
-	if ($ttl < 0) {
-		$ttl = 0;
-	}
-
-	if (icalfeed_apcu_available()) {
-		$apcuKey = 'fp:icalfeed:' . icalfeed_cache_gen() . ':' . sha1($key);
-		apcu_store($apcuKey, $data, $ttl);
-	}
-
+	$ttl = (int) $ttl;
+	// TTL <= 0 disables caching entirely (APCu + file cache)
 	if ($ttl <= 0) {
 		return;
 	}
 
-	$file = icalfeed_cache_file($key);
+	if (icalfeed_apcu_available()) {
+		$apcuKey = 'icalfeed:' . icalfeed_cache_gen() . ':' . sha1((string) $key);
+		icalfeed_apcu_store($apcuKey, $data, $ttl);
+	}
+
+	$file = icalfeed_cache_file((string) $key);
 	$json = json_encode($data);
 	if (is_string($json) && $json !== '') {
 		@file_put_contents($file, $json, LOCK_EX);
