@@ -1,6 +1,6 @@
 <?php
 /*  
-Theme Name: FlatMistyLoook
+Theme Name: FlatMistyLook
 Theme URI: http://wpthemes.info/misty-look/
 Description: Based on the Wordpress MistyLook 3.8RC Theme from http://wpthemes.info/misty-look/'. 
 Version: 0.705
