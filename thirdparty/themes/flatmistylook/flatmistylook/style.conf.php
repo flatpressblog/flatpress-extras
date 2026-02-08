@@ -8,7 +8,7 @@ Author: sneakatron
 Author URI: http://wpthemes.info/misty-look/
 */
 	
-	$style['name'] = 'flatmistylook';
+	$style['name'] = 'FlatMistyLook';
 	$style['author'] = 'sneakatron';
 	$style['www'] = 'http://wpthemes.info/misty-look/';
 	
